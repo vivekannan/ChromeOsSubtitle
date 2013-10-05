@@ -705,6 +705,8 @@ a:visited {
 	line-height: 22px;
 	font-size: 22px;
 	color: #fff;
+	-webkit-text-stroke-width: 0.22px;
+	-webkit-text-stroke-color: black;
 }
 .mejs-captions-layer  a {
 	color: #fff;
@@ -728,8 +730,8 @@ a:visited {
 
 .mejs-captions-text {
 	padding: 3px 5px;
-	background: url(background.png);
-	background: rgba(20, 20, 20, 0.8);
+	/* background: url(background.png); */
+	/* background: rgba(20, 20, 20, 0.8); */
 
 }
 /* End: TRACK (Captions and Chapters) */

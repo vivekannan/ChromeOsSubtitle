@@ -12,6 +12,9 @@ MediaElementPlayer.prototype.buildsubsize = function(player, controls, layers, m
 	    },
 	    "font-size":function( index, oldValue ) {
 		return value + "px";
+	    },
+	    "-webkit-text-stroke-width":function( index, oldValue ) {
+		return (Number(value)/40) + "px";
 	    }
 	});
     };
