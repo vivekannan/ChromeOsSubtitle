@@ -1,6 +1,6 @@
 {
   "name": "Subtitle Videoplayer",
-  "version": "1.0.2",
+  "version": "1.4.0",
   "manifest_version": 2,
   "icons": {
     "16": "camera.png",
@@ -11,7 +11,8 @@
         "http://localhost"
     ],
     "launch": {
-      "web_url": "http://localhost:8000/index.html"
+      "web_url": "http://localhost:8000/content/index.html"
     }
-  }
+  },
+  "offline_enabled": true
 }
