@@ -1,6 +1,6 @@
 {
-  "name": "Subtitle Videoplayer",
-  "version": "1.0.2",
+  "name": "Subtitle Videoplayer Hosted",
+  "version": "1.4.0",
   "manifest_version": 2,
   "icons": {
     "16": "camera.png",
@@ -8,10 +8,11 @@
   },
   "app": {
     "urls": [
-        "https://rawgithub.com/guancio/ChromeOsSubtitle/hosted/webapp/"
+        "https://rawgithub.com/guancio/ChromeOsSubtitle/hosted/"
     ],
     "launch": {
-      "web_url": "https://rawgithub.com/guancio/ChromeOsSubtitle/hosted/webapp/index.html"
+      "web_url": "https://rawgithub.com/guancio/ChromeOsSubtitle/hosted/src/index.html"
     }
-  }
+  },
+  "offline_enabled": true
 }
