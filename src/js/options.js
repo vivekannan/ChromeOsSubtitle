@@ -1,7 +1,5 @@
 (function() {
     mejs.MepDefaults = {
-        // url to poster (to fix iOS 3.x)
-        poster: '',
         // default if the <video width> is not specified
         defaultVideoWidth: 480,
         // default if the <video height> is not specified
@@ -48,6 +46,10 @@
         
         // turns keyboard support on and off for this instance
         enableKeyboard: true,
+        
+        aspectRatios: [null, 1, 1.333333, 1.777778, 1.666666, 2.21, 2.35, 2.39, 1.25],
+        
+        aspectRatiosText: ['Default', '1:1', '4:3', '16:9', '16:10', '2.21:1', '2.35:1', '2.39:1', '5:4'],
         
         // array of keyboard actions such as play pause
         keyActions: [
@@ -199,6 +201,15 @@
                         return;
                     
                     player.openSubtitleLogIn();
+                }
+            },
+            {
+                keys: [65], // D
+                action: function(player, keyCode, activeModifiers) {
+                    if(!activeModifiers.ctrl || !player.openedFile)
+                        return;
+                    
+                    player.changeAspectRatio();
                 }
             }
         ]

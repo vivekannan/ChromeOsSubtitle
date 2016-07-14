@@ -169,86 +169,52 @@
             }
         },
         
-        showControls: function(doAnimation) {
+        showControls: function() {
             var t = this;
-            
-            doAnimation = typeof doAnimation == 'undefined' || doAnimation;
             
             if(t.controlsAreVisible)
                 return;
+            
+            t.controls
+                .css('visibility', 'visible')
+                .stop(true, true).fadeIn(200, function() {
+                    t.controlsAreVisible = true;
+                    t.container.trigger('controlsshown');
+                });
                 
-            if(doAnimation) {
-                t.controls
-                    .css('visibility', 'visible')
-                    .stop(true, true).fadeIn(200, function() {
-                        t.controlsAreVisible = true;
-                        t.container.trigger('controlsshown');
-                    });
-                    
-                // any additional controls people might add and want to hide
-                t.container.find('.mejs-control')
-                    .css('visibility', 'visible')
-                    .stop(true, true).fadeIn(200, function() {
-                        t.controlsAreVisible = true;
-                    });
-                    
-            } else {
-                t.controls
-                    .css('visibility', 'visible')
-                    .css('display', 'block');
-                    
-                // any additional controls people might add and want to hide
-                t.container.find('.mejs-control')
-                    .css('visibility', 'visible')
-                    .css('display', 'block');
-                    
-                t.controlsAreVisible = true;
-                t.container.trigger('controlsshown');
-            }
+            // any additional controls people might add and want to hide
+            t.container.find('.mejs-control')
+                .css('visibility', 'visible')
+                .stop(true, true).fadeIn(200, function() {
+                    t.controlsAreVisible = true;
+                });
             
             t.setControlsSize();
             
         },
         
-        hideControls: function(doAnimation) {
+        hideControls: function() {
             var t = this;
-            
-            doAnimation = typeof doAnimation == 'undefined' || doAnimation;
             
             if(!t.controlsAreVisible)
                 return;
-                
-            if(doAnimation) {
-                // fade out main controls
-                t.controls.stop(true, true).fadeOut(200, function() {
-                    $(this)
-                        .css('visibility', 'hidden')
-                        .css('display', 'block');
-                        
-                    t.controlsAreVisible = false;
-                    t.container.trigger('controlshidden');
-                });
-                
-                // any additional controls people might add and want to hide
-                t.container.find('.mejs-control').stop(true, true).fadeOut(200, function() {
-                    $(this)
-                        .css('visibility', 'hidden')
-                        .css('display', 'block');
-                });
-            } else {
-                // hide main controls
-                t.controls
-                    .css('visibility', 'hidden')
-                    .css('display', 'block');
-                    
-                // hide others
-                t.container.find('.mejs-control')
+            
+            // fade out main controls
+            t.controls.stop(true, true).fadeOut(200, function() {
+                $(this)
                     .css('visibility', 'hidden')
                     .css('display', 'block');
                     
                 t.controlsAreVisible = false;
                 t.container.trigger('controlshidden');
-            }
+            });
+            
+            // any additional controls people might add and want to hide
+            t.container.find('.mejs-control').stop(true, true).fadeOut(200, function() {
+                $(this)
+                    .css('visibility', 'hidden')
+                    .css('display', 'block');
+            });
         },
         
         controlsTimer: null,
@@ -313,8 +279,7 @@
             t.domNode = domNode;
             
             if(!(mf.isAndroid && t.options.AndroidUseNativeControls)) {
-                // two built in features
-                t.buildposter(t, t.controls, t.layers, t.media);
+                // built in feature
                 t.buildoverlays(t, t.controls, t.layers, t.media);
                 
                 // grab for use by features
@@ -394,7 +359,7 @@
                     }
                     
                     if(t.options.hideVideoControlsOnLoad) {
-                        t.hideControls(false);
+                        t.hideControls();
                     }
                     
                     // check for autoplay
@@ -463,12 +428,8 @@
                 t.globalBind('resize', function() {
                     // always adjust controls
                     t.setControlsSize();
+                    t.resizeVideo();
                 });
-                
-                // TEMP: needs to be moved somewhere else
-                if(t.media.pluginType == 'youtube') {
-                    t.container.find('.mejs-overlay-play').hide();
-                }
             }
             
             // force autoplay for HTML5
@@ -483,17 +444,6 @@
                 } else {
                     t.options.success(t.media, t.domNode, t);
                 }
-            }
-        },
-        
-        handleError: function(e) {
-            var t = this;
-            
-            t.controls.hide();
-            
-            // Tell user that the file cannot be played
-            if(t.options.error) {
-                t.options.error(e);
             }
         },
         
@@ -538,46 +488,6 @@
                 t.setProgressRail();
             if(t.setCurrentRail)
                 t.setCurrentRail();
-        },
-        
-        buildposter: function(player, controls, layers, media) {
-            var t = this,
-                poster =
-                $('<div class="mejs-poster mejs-layer">' +
-                    '</div>')
-                .appendTo(layers),
-                posterUrl = player.$media.attr('poster');
-                
-            // prioriy goes to option (this is useful if you need to support iOS 3.x (iOS completely fails with poster)
-            if(player.options.poster !== '') {
-                posterUrl = player.options.poster;
-            }
-            
-            // second, try the real poster
-            if(posterUrl !== '' && posterUrl != null) {
-                t.setPoster(posterUrl);
-            } else {
-                poster.hide();
-            }
-            
-            media.addEventListener('play', function() {
-                poster.hide();
-            }, false);
-        },
-        
-        setPoster: function(url) {
-            var t = this,
-                posterDiv = t.container.find('.mejs-poster'),
-                posterImg = posterDiv.find('img');
-                
-            if(posterImg.length == 0) {
-                posterImg = $('<img width="100%" height="100%" />').appendTo(posterDiv);
-            }
-            
-            posterImg.attr('src', url);
-            posterDiv.css({
-                'background-image': 'url(' + url + ')'
-            });
         },
         
         buildoverlays: function(player, controls, layers, media) {
@@ -649,7 +559,9 @@
                 loading.show();
                 controls.find('.mejs-time-buffering').show();
                 player.play();
+                player.resizeVideo();
             }, false);
+            
             media.addEventListener('canplay', function() {
                 loading.hide();
                 controls.find('.mejs-time-buffering').hide();
@@ -765,7 +677,7 @@
         
         resetPlaybackRate: function() {
             this.media.playbackRate = 1.0;
-            this.setNotification('Playback Rate: x' + this.media.playbackRate.toPrecision(2));
+            this.setNotification('Playback Rate: x1.00');
         },
         
         incPlaybackRate: function() {
@@ -782,6 +694,35 @@
             this.media.loop = !this.media.loop;
             this.setNotification('Loop O' + (this.media.loop ? 'n.' : 'ff.'));
         },
+        
+        currentAspectRatio: 0,
+        
+        resizeVideo: function() {
+            var targetAspectRatio,
+                wH = window.innerHeight,
+                wW = window.innerWidth;
+            
+            if(this.currentAspectRatio === 0) {
+                targetAspectRatio = this.media.videoWidth / this.media.videoHeight;
+            }
+            
+            else {
+                targetAspectRatio = this.options.aspectRatios[this.currentAspectRatio];
+            }
+            
+            if(wH * targetAspectRatio <= wW) {
+                $(this.media).css({ 'width': wH * targetAspectRatio, 'height': wH });
+            }
+            else {
+                $(this.media).css({ 'width': wW, 'height': wW / targetAspectRatio });
+            }
+        },
+        
+        changeAspectRatio: function() {
+            this.currentAspectRatio = (this.currentAspectRatio + 1) % this.options.aspectRatios.length;
+            this.resizeVideo();
+            this.setNotification('Aspect Ratio: ' + this.options.aspectRatiosText[this.currentAspectRatio]);
+        }
     };
     
     (function() {

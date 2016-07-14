@@ -13,7 +13,6 @@
             .click(function() {
                 if(media.currentTime > 0) {
                     player.stop();
-                    layers.find('.mejs-poster').show();
                 }
             });
     }

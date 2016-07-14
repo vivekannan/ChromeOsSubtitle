@@ -42,13 +42,11 @@ $('#player').mediaelementplayer({
         t.setControlsSize();
         
         function openCmdLineVideo() {
-            if(!window.launchData)
+            if(!window.launchData || !window.launchData.items || window.launchData.items.length != 1)
                 return false;
-            if(!window.launchData.items)
-                return false;
-            if(window.launchData.items.length != 1)
-                return false;
+            
             entry = window.launchData.items[0].entry;
+            
             if(entry == null)
                 return false;
             
@@ -56,9 +54,8 @@ $('#player').mediaelementplayer({
             entry.file(function fff(file) {
                 mainMediaElement.player.openedFile = file;
                 mainMediaElement.player.openedFileEntry = entry;
-            
-                var path = window.URL.createObjectURL(file);
-                mainMediaElement.setSrc(path);
+                
+                mainMediaElement.setSrc(window.URL.createObjectURL(file));
                 mainMediaElement.play();
             });
             return true;
