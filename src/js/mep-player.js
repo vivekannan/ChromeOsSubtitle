@@ -432,12 +432,6 @@
                 });
             }
             
-            // force autoplay for HTML5
-            if(autoplay && media.pluginType == 'native') {
-                media.load();
-                player.play();
-            }
-            
             if(t.options.success) {
                 if(typeof t.options.success == 'string') {
                     window[t.options.success](t.media, t.domNode, t);
@@ -466,7 +460,6 @@
             
             // attempt to autosize
             if(railWidth === 0 || !railWidth) {
-            
                 // find the size of all the other controls besides the rail
                 others.each(function() {
                     var $this = $(this);
@@ -711,9 +704,11 @@
             }
             
             if(wH * targetAspectRatio <= wW) {
+                //$(this.media).css('-webkit-transform', 'scale(' + (wH * targetAspectRatio) / this.media.videoWidth + ',' + wH / this.media.videoHeight + ')');
                 $(this.media).css({ 'width': wH * targetAspectRatio, 'height': wH });
             }
             else {
+                //$(this.media).css('-webkit-transform', 'scale(' + wW / this.media.videoWidth + ',' + wW / (targetAspectRatio * this.media.videoHeight) + ')');
                 $(this.media).css({ 'width': wW, 'height': wW / targetAspectRatio });
             }
         },
