@@ -112,17 +112,17 @@ zip.useWebWorkers = false;
         
         encodingText = encodingText + '</select></il>';
         player.captionsButton = $('<div class="mejs-button mejs-captions-button mejs-captions-enabled">' +
-                '<button type="button" aria-controls="' + t.id + '" title="' + t.options.tracksText + '" aria-label="' + t.options.tracksText + '"></button>' +
+                '<button type="button" title="' + t.options.tracksText + '" aria-label="' + t.options.tracksText + '"></button>' +
                 '<div class="mejs-captions-selector">' +
                 '<ul>' +
                 '<li>' +
-                '<input type="radio" name="' + player.id + '_captions" id="' + player.id + '_captions_none" value="none" checked="checked" />' +
-                '<label for="' + player.id + '_captions_none">' + mejs.i18n.t('None') + '</label>' +
+                '<input type="radio" name="_captions" id="_captions_none" value="none" checked="checked" />' +
+                '<label for="_captions_none">' + mejs.i18n.t('None') + '</label>' +
                 '</li>' +
                 '<li class="mejs-captionload">' +
-                '<input type="radio" name="' + player.id + '_captions" id="' + player.id + '_captions_fromfile" value="fromfile" disabled="disabled"/>' +
+                '<input type="radio" name="_captions" id="_captions_fromfile" value="fromfile" disabled="disabled"/>' +
                 '<div class="mejs-button  mejs-captionload" >' +
-                '<button type="button" aria-controls="' + t.id + '" title="' + mejs.i18n.t('Load subtitle...') + '" aria-label="' + mejs.i18n.t('Load subtitle...') + '"></button>' +
+                '<button type="button" title="' + mejs.i18n.t('Load subtitle...') + '" aria-label="' + mejs.i18n.t('Load subtitle...') + '"></button>' +
                 '</div>' +
                 '<input style="display:none" type="file" id="opensrtfile_input"/>' +
                 '<select id="select_srtname" style="padding: 0px 0px 0px 0px;text-overflow: ellipsis;width: 105px;height: 18px;overflow: hidden;white-space: nowrap;left:60px;position:absolute;visibility:hidden"/>' +
@@ -144,7 +144,7 @@ zip.useWebWorkers = false;
             if(player.tracks.length == 0)
                 return;
             
-            var radios = player.controls.find('input[name="' + t.id + '_captions"]');
+            var radios = player.controls.find('input[name="_captions"]');
             var selectedRadio = radios.filter(function(e) {
                 return radios[e].checked
             })[0];
@@ -268,7 +268,7 @@ zip.useWebWorkers = false;
         
         media.addEventListener('loadeddata', function() {
             if(player.tracks.length == 0) {
-                $('#' + t.id + '_captions_none').click();
+                $('#_captions_none').click();
                 t.captionsButton
                     .find('input[value=fromfile]')
                     .prop('disabled', true);
@@ -396,7 +396,7 @@ zip.useWebWorkers = false;
             i;
         
         $(document).trigger("subtitleChanged");
-        $('#' + this.id + '_captions_' + lang)[0].checked = true;
+        $('#_captions_' + lang)[0].checked = true;
         if(lang == 'none') {
             t.selectedTrack = null;
         } else {
@@ -481,7 +481,7 @@ zip.useWebWorkers = false;
             .find('#encoding-selector')
             .prop('disabled', false);
             
-        $('#' + t.id + '_captions_' + lang).click();
+        $('#_captions_' + lang).click();
         
         t.adjustLanguageBox();
     },
@@ -494,8 +494,8 @@ zip.useWebWorkers = false;
         
         t.captionsButton.find('ul').append(
             $('<li>' +
-                '<input type="radio" name="' + t.id + '_captions" id="' + t.id + '_captions_' + lang + '" value="' + lang + '" disabled="disabled" />' +
-                '<label for="' + t.id + '_captions_' + lang + '">' + label + ' (loading)' + '</label>' +
+                '<input type="radio" name="_captions" id="_captions_' + lang + '" value="' + lang + '" disabled="disabled" />' +
+                '<label for="_captions_' + lang + '">' + label + ' (loading)' + '</label>' +
                 '</li>')
         );
         

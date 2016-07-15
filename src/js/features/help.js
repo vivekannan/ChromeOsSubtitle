@@ -57,7 +57,7 @@
         };
         var open =
             $('<div class="mejs-button mejs-help-button mejs-help" >' +
-                '<button type="button" aria-controls="' + t.id + '" title="' + mejs.i18n.t('Help...') + '" aria-label="' + mejs.i18n.t('Help...') + '"></button>' +
+                '<button type="button" title="' + mejs.i18n.t('Help...') + '" aria-label="' + mejs.i18n.t('Help...') + '"></button>' +
                 '</div>')
             .appendTo(controls)
             .click(function(e) {

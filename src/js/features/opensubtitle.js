@@ -95,8 +95,8 @@ var openSubsLang = [
         var prec = $('#li_encoding');
         var line1 =
             $('<li class="mejs-captionload"/>')
-            .append($('<input type="radio" name="' + player.id + '_captions" id="' + player.id + '_captions_opensubtitle" value="opensubtitle" disabled="disabled"/>'))
-            .append($('<div id="opensubtitle_button" class="mejs-button  mejs-captionload" > <button type="button" aria-controls="' + t.id + '" title="' + mejs.i18n.t('Download subtitles from OpenSubtitles.org') + '" aria-label="' + mejs.i18n.t('Download subtitles from OpenSubtitles.org') + '"></button></div>'))
+            .append($('<input type="radio" name="_captions" id="_captions_opensubtitle" value="opensubtitle" disabled="disabled"/>'))
+            .append($('<div id="opensubtitle_button" class="mejs-button  mejs-captionload" > <button type="button" title="' + mejs.i18n.t('Download subtitles from OpenSubtitles.org') + '" aria-label="' + mejs.i18n.t('Download subtitles from OpenSubtitles.org') + '"></button></div>'))
             .append($('<select id="select_opensubtitle_lang" style="padding: 0px 0px 0px 0px;text-overflow: ellipsis;width: 105px;height: 18px;overflow: hidden;white-space: nowrap;left:60px;position:absolute"/>'));
         line1.insertBefore(prec)
         
@@ -114,7 +114,7 @@ var openSubsLang = [
         
         $('#select_opensubtitle_lang').val("eng");
         
-        player.controls.find('input[id="' + player.id + '_captions_opensubtitle"]').click(function() {
+        player.controls.find('input[id="_captions_opensubtitle"]').click(function() {
             lang = this.value;
             player.setTrack(lang);
         });

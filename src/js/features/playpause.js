@@ -7,7 +7,7 @@
     MediaElementPlayer.prototype.buildplaypause = function(player, controls, layers, media) {
         var t = this,
             play = $('<div class="mejs-button mejs-playpause-button mejs-play" >' +
-                '<button type="button" aria-controls="' + t.id + '" title="' + t.options.playpauseText + '" aria-label="' + t.options.playpauseText + '"></button>' +
+                '<button type="button" title="' + t.options.playpauseText + '" aria-label="' + t.options.playpauseText + '"></button>' +
                 '</div>')
             .appendTo(controls)
             .click(function(e) {

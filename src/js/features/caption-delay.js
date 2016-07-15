@@ -24,13 +24,13 @@
         // create the buttons
         var dec =
             $('<div class="mejs-button mejs-reduce-button mejs-reduce" >' +
-                '<button type="button" aria-controls="' + t.id + '" title="' + mejs.i18n.t('Decrease caption delay') + '" aria-label="' + mejs.i18n.t('Decrease caption delay') + '"></button>' + '</div>')
+                '<button type="button" title="' + mejs.i18n.t('Decrease caption delay') + '" aria-label="' + mejs.i18n.t('Decrease caption delay') + '"></button>' + '</div>')
             .click(function() {
                 t.decCaptionDelay();
             });
         var inc =
             $('<div class="mejs-button mejs-increase-button mejs-increase" >' +
-                '<button type="button" aria-controls="' + t.id + '" title="' + mejs.i18n.t('Increase caption delay') + '" aria-label="' + mejs.i18n.t('Increase caption delay') + '"></button>' + '</div>')
+                '<button type="button" title="' + mejs.i18n.t('Increase caption delay') + '" aria-label="' + mejs.i18n.t('Increase caption delay') + '"></button>' + '</div>')
             .click(function() {
                 t.incCaptionDelay();
             });

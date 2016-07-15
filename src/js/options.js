@@ -25,8 +25,6 @@
         autoRewind: true,
         // resize to media dimensions
         enableAutosize: true,
-        // forces the hour marker (##:00:00)
-        alwaysShowHours: false,
         
         // automatically calculate the width of the progress bar based on the sizes of other elements
         autosizeProgress: true,

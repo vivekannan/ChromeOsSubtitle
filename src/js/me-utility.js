@@ -64,11 +64,11 @@ mejs.Utility = {
         return codePath;
     },
     
-    secondsToTimeCode: function(time, forceHours) {
+    secondsToTimeCode: function(time) {
         var hours = Math.floor(time / 3600) % 24,
             minutes = Math.floor(time / 60) % 60,
             seconds = Math.floor(time % 60),
-            result = ((forceHours || hours > 0) ? (hours < 10 ? '0' + hours : hours) + ':' : '') +
+            result = (hours > 0 ? (hours < 10 ? '0' + hours : hours) + ':' : '') +
                 (minutes < 10 ? '0' + minutes : minutes) + ':' +
                 (seconds < 10 ? '0' + seconds : seconds);
         

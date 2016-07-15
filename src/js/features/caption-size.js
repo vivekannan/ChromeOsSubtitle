@@ -34,13 +34,13 @@
         // create the buttons
         var dec =
             $('<div class="mejs-button mejs-reduce-button mejs-reduce" >' +
-                '<button type="button" aria-controls="' + t.id + '" title="' + mejs.i18n.t('Decrease caption size') + '" aria-label="' + mejs.i18n.t('Decrease caption size') + '"></button>' + '</div>')
+                '<button type="button" title="' + mejs.i18n.t('Decrease caption size') + '" aria-label="' + mejs.i18n.t('Decrease caption size') + '"></button>' + '</div>')
             .click(function() {
                 t.decCaptionSize();
             });
         var inc =
             $('<div class="mejs-button mejs-increase-button mejs-increase" >' +
-                '<button type="button" aria-controls="' + t.id + '" title="' + mejs.i18n.t('Increase caption size') + '" aria-label="' + mejs.i18n.t('Increase caption size') + '"></button>' + '</div>')
+                '<button type="button" title="' + mejs.i18n.t('Increase caption size') + '" aria-label="' + mejs.i18n.t('Increase caption size') + '"></button>' + '</div>')
             .click(function() {
                 t.incCaptionSize();
             });

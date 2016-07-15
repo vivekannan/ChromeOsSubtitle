@@ -5,7 +5,7 @@
             .appendTo(controls);
         t.openedFile = null;
         var open = $('<div class="mejs-button mejs-source-button mejs-source" >' +
-                '<button type="button" aria-controls="' + t.id + '" title="' + mejs.i18n.t('Open video...') + '" aria-label="' + mejs.i18n.t('Open video...') + '"></button>' +
+                '<button type="button" title="' + mejs.i18n.t('Open video...') + '" aria-label="' + mejs.i18n.t('Open video...') + '"></button>' +
                 '</div>')
             .appendTo(controls);
         player.openFileForm = function() {

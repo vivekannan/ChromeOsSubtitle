@@ -52,7 +52,7 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
         
         var open =
             $('<div class="mejs-button mejs-info-button mejs-info" >' +
-                '<button type="button" aria-controls="' + t.id + '" title="' + mejs.i18n.t('About...') + '" aria-label="' + mejs.i18n.t('About...') + '"></button>' +
+                '<button type="button" title="' + mejs.i18n.t('About...') + '" aria-label="' + mejs.i18n.t('About...') + '"></button>' +
                 '</div>')
             .appendTo(controls)
             .click(function(e) {

@@ -1,8 +1,4 @@
 (function($) {
-    mejs.mepIndex = 0;
-    
-    mejs.players = {};
-    
     // wraps a MediaElement object in player controls
     mejs.MediaElementPlayer = function(node, o) {
         // enforce object, even without "new" (via John Resig)
@@ -31,12 +27,6 @@
         
         // extend default options
         t.options = $.extend({}, mejs.MepDefaults, o);
-        
-        // unique ID
-        t.id = 'mep_' + mejs.mepIndex++;
-        
-        // add to player array (for focus events)
-        mejs.players[t.id] = t;
         
         // start up
         t.init();
@@ -85,7 +75,7 @@
                 
                 // build container
                 t.container =
-                    $('<div id="' + t.id + '" class="mejs-container ' + (mejs.MediaFeatures.svg ? 'svg' : 'no-svg') + '">' +
+                    $('<div class="mejs-container ' + (mejs.MediaFeatures.svg ? 'svg' : 'no-svg') + '">' +
                         '<div class="mejs-inner">' +
                         '<div class="mejs-mediaelement"></div>' +
                         '<div class="mejs-layers"></div>' +
