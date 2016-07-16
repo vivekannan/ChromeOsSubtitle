@@ -166,7 +166,6 @@
                 });
             
             t.setControlsSize();
-            
         },
         
         hideControls: function() {

@@ -17,53 +17,6 @@ mejs.Utility = {
         return el.firstChild.href;
     },
     
-    getScriptPath: function(scriptNames) {
-        var
-            i = 0,
-            j,
-            codePath = '',
-            testname = '',
-            slashPos,
-            filenamePos,
-            scriptUrl,
-            scriptPath,
-            scriptFilename,
-            scripts = document.getElementsByTagName('script'),
-            il = scripts.length,
-            jl = scriptNames.length;
-        
-        // go through all <script> tags
-        for(; i < il; i++) {
-            scriptUrl = scripts[i].src;
-            slashPos = scriptUrl.lastIndexOf('/');
-            if(slashPos > -1) {
-                scriptFilename = scriptUrl.substring(slashPos + 1);
-                scriptPath = scriptUrl.substring(0, slashPos + 1);
-            } else {
-                scriptFilename = scriptUrl;
-                scriptPath = '';
-            }
-            
-            // see if any <script> tags have a file name that matches the 
-            for(j = 0; j < jl; j++) {
-                testname = scriptNames[j];
-                filenamePos = scriptFilename.indexOf(testname);
-                if(filenamePos > -1) {
-                    codePath = scriptPath;
-                    break;
-                }
-            }
-            
-            // if we found a path, then break and return it
-            if(codePath !== '') {
-                break;
-            }
-        }
-        
-        // send the best path back
-        return codePath;
-    },
-    
     secondsToTimeCode: function(time) {
         var hours = Math.floor(time / 3600) % 24,
             minutes = Math.floor(time / 60) % 60,

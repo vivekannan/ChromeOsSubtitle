@@ -1,10 +1,3 @@
-// Handles calls from Flash/Silverlight and reports them as native <video/audio> events and properties
-mejs.MediaPluginBridge = {
-    pluginMediaElements: {},
-    
-    htmlMediaElements: {}
-};
-
 /*
 Default options
 */
@@ -22,8 +15,6 @@ mejs.MediaElementDefaults = {
     enablePluginDebug: false,
     // overrides the type specified, useful for dynamic instantiation
     type: '',
-    // path to Flash and Silverlight plugins
-    pluginPath: mejs.Utility.getScriptPath(['mediaelement.js', 'mediaelement.min.js', 'mediaelement-and-player.js', 'mediaelement-and-player.min.js']),
     // name of flash file
     flashName: 'flashmediaelement.swf',
     // streamer for RTMP streaming

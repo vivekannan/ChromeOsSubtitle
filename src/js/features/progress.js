@@ -130,17 +130,6 @@
             // TODO: account for a real array with multiple values (only Firefox 4 has this so far) 
             percent = target.buffered.end(0) / target.duration;
         }
-        // Some browsers (e.g., FF3.6 and Safari 5) cannot calculate target.bufferered.end()
-        // to be anything other than 0. If the byte count is available we use this instead.
-        // Browsers that support the else if do not seem to have the bufferedBytes value and
-        // should skip to there. Tested in Safari 5, Webkit head, FF3.6, Chrome 6, IE 7/8.
-        else if(target && target.bytesTotal != undefined && target.bytesTotal > 0 && target.bufferedBytes != undefined) {
-            percent = target.bufferedBytes / target.bytesTotal;
-        }
-        // Firefox 3 with an Ogg file seems to go this way
-        else if(e && e.lengthComputable && e.total != 0) {
-            percent = e.loaded / e.total;
-        }
         
         // finally update the progress bar
         if(percent !== null) {
