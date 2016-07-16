@@ -32,7 +32,7 @@
                     newTime = 0,
                     pos = 0;
                 
-                if(media.duration) {
+                if(player.getDuration()) {
                     if(x < offset.left) {
                         x = offset.left;
                     } else if(x > width + offset.left) {
@@ -40,11 +40,11 @@
                     }
                     
                     pos = x - offset.left;
-                    newTime = (pos / width) * media.duration;
+                    newTime = (pos / width) * player.getDuration();
                     
                     // seek to where the mouse is
-                    if(mouseIsDown && newTime !== media.currentTime) {
-                        media.setCurrentTime(newTime);
+                    if(mouseIsDown && newTime !== player.getCurrentTime()) {
+                        player.setCurrentTime(newTime);
                     }
                     
                     // position floating time box

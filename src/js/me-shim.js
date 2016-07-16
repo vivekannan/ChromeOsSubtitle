@@ -2,79 +2,7 @@
 mejs.MediaPluginBridge = {
     pluginMediaElements: {},
     
-    htmlMediaElements: {},
-    
-    registerPluginElement: function(id, pluginMediaElement, htmlMediaElement) {
-        this.pluginMediaElements[id] = pluginMediaElement;
-        this.htmlMediaElements[id] = htmlMediaElement;
-    },
-    
-    unregisterPluginElement: function(id) {
-        delete this.pluginMediaElements[id];
-        delete this.htmlMediaElements[id];
-    },
-    
-    // when Flash/Silverlight is ready, it calls out to this method
-    initPlugin: function(id) {
-        var pluginMediaElement = this.pluginMediaElements[id],
-            htmlMediaElement = this.htmlMediaElements[id];
-        
-        if(pluginMediaElement) {
-            // find the javascript bridge
-            switch(pluginMediaElement.pluginType) {
-                case "flash":
-                    pluginMediaElement.pluginElement = pluginMediaElement.pluginApi = document.getElementById(id);
-                    break;
-                case "silverlight":
-                    pluginMediaElement.pluginElement = document.getElementById(pluginMediaElement.id);
-                    pluginMediaElement.pluginApi = pluginMediaElement.pluginElement.Content.MediaElementJS;
-                    break;
-            }
-            
-            if(pluginMediaElement.pluginApi != null && pluginMediaElement.success) {
-                pluginMediaElement.success(pluginMediaElement, htmlMediaElement);
-            }
-        }
-    },
-    
-    // receives events from Flash/Silverlight and sends them out as HTML5 media events
-    // http://www.whatwg.org/specs/web-apps/current-work/multipage/video.html
-    fireEvent: function(id, eventName, values) {
-        var e,
-            i,
-            bufferedTime,
-            pluginMediaElement = this.pluginMediaElements[id];
-        
-        pluginMediaElement.ended = false;
-        pluginMediaElement.paused = true;
-        
-        // fake event object to mimic real HTML media event.
-        e = {
-            type: eventName,
-            target: pluginMediaElement
-        };
-        
-        // attach all values to element and event object
-        for(i in values) {
-            pluginMediaElement[i] = values[i];
-            e[i] = values[i];
-        }
-        
-        // fake the newer W3C buffered TimeRange (loaded and total have been removed)
-        bufferedTime = values.bufferedTime || 0;
-        
-        e.target.buffered = e.buffered = {
-            start: function(index) {
-                return 0;
-            },
-            end: function(index) {
-                return bufferedTime;
-            },
-            length: 1
-        };
-        
-        pluginMediaElement.dispatchEvent(e.type, e);
-    }
+    htmlMediaElements: {}
 };
 
 /*
@@ -210,9 +138,9 @@ mejs.HtmlMediaElementShim = {
             pluginInfo,
             dummy,
             media;
-
+        
         // STEP 1: Get URL and type from <video src> or <source src>
-
+        
         // supplied type overrides <video type> and <source type>
         if(typeof options.type != 'undefined' && options.type !== '') {
             // accept either string or array of types

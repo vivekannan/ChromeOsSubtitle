@@ -130,7 +130,7 @@ var openSubsLang = [
                 reader.gunzip(new zip.BlobWriter(), function(data) {
                         info(sub.SubFileName);
                         
-                        player.setNotification(sub.SubFileName + ' downloaded.');
+                        player.setNotification(sub.SubFileName + ' downloaded.', 3000);
                         
                         if(t.opensubtitleService.lastSubtitles.length > 1) {
                             $('#select_opensubtitle').css('visibility', 'inherit');

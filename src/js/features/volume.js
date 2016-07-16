@@ -138,11 +138,11 @@
                 
                 // set the media object (this will trigger the volumechanged event)
                 if(volume == 0) {
-                    media.setMuted(true);
+                    player.setMuted(true);
                 } else {
-                    media.setMuted(false);
+                    player.setMuted(false);
                 }
-                media.setVolume(volume);
+                player.setVolume(volume);
             },
             mouseIsDown = false,
             mouseIsOver = false;
@@ -185,7 +185,7 @@
             
         // MUTE button
         mute.find('button').click(function() {
-            media.setMuted(!media.muted);
+            player.setMuted(!media.muted);
         });
         
         // listen for volume change events from other sources
@@ -207,12 +207,12 @@
             
             // mutes the media and sets the volume icon muted if the initial volume is set to 0
             if(player.options.startVolume === 0) {
-                media.setMuted(true);
+                player.setMuted(true);
             }
             
             // shim gets the startvolume as a parameter, but we have to set it on the native <video> and <audio> elements
             if(media.pluginType === 'native') {
-                media.setVolume(player.options.startVolume);
+                player.setVolume(player.options.startVolume);
             }
         }
     }

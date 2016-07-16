@@ -32,8 +32,6 @@
         alwaysShowControls: false,
         // Display the video control
         hideVideoControlsOnLoad: false,
-        // Enable click video element to toggle play/pause
-        clickToPlayPause: true,
         // force Android's native controls
         AndroidUseNativeControls: false,
         // features to show
@@ -107,11 +105,6 @@
                         
                         if(seekDuration)
                             player.seek(seekDuration);
-                        
-                        if(player.isVideo) {
-                            player.showControls();
-                            player.startControlsTimer();
-                        }
                     }
                 }
             },
@@ -121,16 +114,16 @@
                     if(!activeModifiers.ctrl)
                         return;
                     
-                    if(typeof player.enterFullScreen != 'undefined') {
-                        if(player.isFullScreen)
-                            player.exitFullScreen();
-                        else
-                            player.enterFullScreen();
+                    if(document.webkitIsFullScreen) {
+                        player.exitFullScreen();
+                    }
+                    else {
+                        player.enterFullScreen();
                     }
                 }
             },
             {
-                keys: [79], // O
+                keys: [79], // o
                 action: function(player, keyCode, activeModifiers) {
                     if(activeModifiers.ctrl)
                         player.openFileForm();
@@ -193,7 +186,7 @@
                 }
             },
             {
-                keys: [68], // D
+                keys: [68], // d
                 action: function(player, keyCode, activeModifiers) {
                     if(!activeModifiers.ctrl || !player.openedFile)
                         return;
@@ -202,7 +195,7 @@
                 }
             },
             {
-                keys: [65], // D
+                keys: [65], // a
                 action: function(player, keyCode, activeModifiers) {
                     if(!activeModifiers.ctrl || !player.openedFile)
                         return;

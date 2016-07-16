@@ -29,10 +29,6 @@ $('#player').mediaelementplayer({
             t.container.find('.mejs-shim')
                 .width('100%')
                 .height('100%');
-            
-            //if (!mejs.MediaFeatures.hasTrueNativeFullScreen) {
-            t.media.setVideoSize($(window).width(), $(window).height());
-            //}
         }
         
         t.layers.children('div')

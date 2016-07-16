@@ -136,20 +136,6 @@
                 meOptions.pluginHeight = t.width;
             }
             
-            // create callback during init since it needs access to current
-            // MEP object
-            mejs.MediaElementPlayer.prototype.clickToPlayPauseCallback = function(e) {
-                e.preventDefault();
-                
-                if(t.options.clickToPlayPause) {
-                    if(t.media.paused) {
-                        t.play();
-                    } else {
-                        t.pause();
-                    }
-                }
-            };
-            
             // create MediaElement shim
             mejs.MediaElement(t.$media[0], meOptions);
             
@@ -212,7 +198,7 @@
         startControlsTimer: function(timeout) {
             var t = this;
             
-            timeout = typeof timeout != 'undefined' ? timeout : 1500;
+            timeout = timeout || 1500;
             
             t.killControlsTimer('start');
             
@@ -314,9 +300,6 @@
                             }
                         });
                     } else {
-                        // click to play/pause
-                        t.media.addEventListener('click', t.clickToPlayPauseCallback);
-                        
                         // show/hide controls
                         t.container
                             .bind('mouseenter mouseover', function() {
@@ -364,7 +347,7 @@
                             // then resize to the real dimensions
                             if(t.options.videoHeight <= 0 && t.domNode.getAttribute('height') === null && !isNaN(e.target.videoHeight)) {
                                 t.setControlsSize();
-                                t.media.setVideoSize(e.target.videoWidth, e.target.videoHeight);
+                                // t.media.setVideoSize(e.target.videoWidth, e.target.videoHeight);
                             }
                         }, false);
                     }
@@ -488,28 +471,23 @@
                 // this needs to come last so it's on top
                 bigPlay =
                 $('<div class="mejs-overlay mejs-layer mejs-overlay-play">' +
-                    '<div class="mejs-overlay-button"></div>' +
                     '</div>')
                 .appendTo(layers)
                 .click(function() {
-                    if(t.options.clickToPlayPause) {
-                        if(media.paused) {
-                            player.play();
-                        } else {
-                            player.pause();
-                        }
+                    if(media.paused) {
+                        player.play();
+                    } else {
+                        player.pause();
                     }
                 });
             
             // show/hide big play button
             media.addEventListener('play', function() {
-                bigPlay.hide();
                 loading.hide();
                 controls.find('.mejs-time-buffering').hide();
             }, false);
             
             media.addEventListener('playing', function() {
-                bigPlay.hide();
                 loading.hide();
                 controls.find('.mejs-time-buffering').hide();
             }, false);
@@ -517,6 +495,9 @@
             media.addEventListener('seeking', function() {
                 loading.show();
                 controls.find('.mejs-time-buffering').show();
+                
+                player.showControls();
+                player.startControlsTimer();
             }, false);
             
             media.addEventListener('seeked', function() {
@@ -525,7 +506,6 @@
             }, false);
             
             media.addEventListener('pause', function() {
-                bigPlay.show();
             }, false);
             
             media.addEventListener('waiting', function() {
@@ -613,6 +593,7 @@
         
         stop: function() {
             this.setNotification('￰■');
+            
             if(!this.media.paused) {
                 this.media.pause();
                 $('.mejs-pause').removeClass('mejs-pause').addClass('mejs-play');
@@ -626,7 +607,7 @@
         },
         
         setMuted: function(muted) {
-            this.media.setMuted(muted);
+            this.media.muted = muted;
         },
         
         getDuration: function() {
@@ -634,7 +615,7 @@
         },
         
         setCurrentTime: function(time) {
-            this.media.setCurrentTime(time);
+            this.media.currentTime = time;
         },
         
         seek: function(duration) {
@@ -647,7 +628,7 @@
         },
         
         setVolume: function(volume) {
-            this.media.setVolume(volume);
+            this.media.volume = volume;
         },
         
         getVolume: function() {
@@ -655,7 +636,7 @@
         },
         
         setSrc: function(src) {
-            this.media.setSrc(src);
+            this.media.src = src;
         },
         
         resetPlaybackRate: function() {

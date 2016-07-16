@@ -3,7 +3,7 @@ Utility methods
 */
 mejs.Utility = {
     encodeUrl: function(url) {
-        return encodeURIComponent(url); //.replace(/\?/gi,'%3F').replace(/=/gi,'%3D').replace(/&/gi,'%26');
+        return encodeURIComponent(url);
     },
     
     escapeHTML: function(s) {

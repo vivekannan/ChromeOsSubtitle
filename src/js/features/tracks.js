@@ -1,4 +1,5 @@
-zip.useWebWorkers = false;
+zip.workerScriptsPath = 'lib/zipjs/WebContent/'
+zip.useWebWorkers = packaged_app;
 
 (function($) {
     // add extra default options 
@@ -14,7 +15,7 @@ zip.useWebWorkers = false;
         // If true and we only have one track, change captions to popup
         toggleCaptionsButtonWhenOnlyOne: false,
         
-        // #id or .class		
+        // #id or .class
         slidesSelector: '',
         
         hasChapters: false,
