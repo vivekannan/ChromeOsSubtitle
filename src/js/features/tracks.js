@@ -142,6 +142,8 @@ zip.useWebWorkers = packaged_app;
                 player.captionEncodingSelect.value
             );
             
+            setIntoSettings("default_encoding", player.captionEncodingSelect.value, function(obj) {});
+            
             if(player.tracks.length == 0)
                 return;
             
@@ -465,7 +467,11 @@ zip.useWebWorkers = packaged_app;
         reader.onerror = function() {
             t.loadNextTrack();
         };
-        reader.readAsText(track.file, t.captionEncodingSelect.value);
+        
+         getFromSettings('default_encoding', t.captionEncodingSelect.value, function (value) {
+                t.captionEncodingSelect.value = value;
+                reader.readAsText(track.file, value);
+            });
     },
     
     MediaElementPlayer.prototype.enableTrackButton = function(lang, label) {
