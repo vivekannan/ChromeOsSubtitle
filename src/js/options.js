@@ -30,8 +30,6 @@
         autosizeProgress: true,
         // Hide controls when playing and mouse is not over the video
         alwaysShowControls: false,
-        // Display the video control
-        hideVideoControlsOnLoad: false,
         // force Android's native controls
         AndroidUseNativeControls: false,
         // features to show
@@ -39,9 +37,6 @@
         
         // only for dynamic
         isVideo: true,
-        
-        // turns keyboard support on and off for this instance
-        enableKeyboard: true,
         
         aspectRatios: [null, 1, 1.333333, 1.777778, 1.666666, 2.21, 2.35, 2.39, 1.25],
         

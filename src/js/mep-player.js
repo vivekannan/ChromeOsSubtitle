@@ -218,23 +218,6 @@
             }
         },
         
-        controlsEnabled: true,
-        
-        disableControls: function() {
-            var t = this;
-            
-            t.killControlsTimer();
-            t.hideControls(false);
-            this.controlsEnabled = false;
-        },
-        
-        enableControls: function() {
-            var t = this;
-            
-            t.showControls(false)
-            t.controlsEnabled = true;
-        },
-        
         // Sets up all controls and events
         meReady: function(media, domNode) {
             var t = this,
@@ -293,45 +276,33 @@
                             if(t.controlsAreVisible) {
                                 t.hideControls(false);
                             } else {
-                                if(t.controlsEnabled) {
-                                    t.showControls(false);
-                                }
+                                t.showControls(false);
                             }
                         });
                     } else {
                         // show/hide controls
                         t.container
                             .bind('mouseenter mouseover', function() {
-                                if(t.controlsEnabled) {
-                                    if(!t.options.alwaysShowControls) {
-                                        t.killControlsTimer('enter');
-                                        t.showControls();
-                                        t.startControlsTimer(2500);
-                                    }
+                                if(!t.options.alwaysShowControls) {
+                                    t.killControlsTimer('enter');
+                                    t.showControls();
+                                    t.startControlsTimer(2500);
                                 }
                             })
                             .bind('mousemove', function() {
-                                if(t.controlsEnabled) {
-                                    if(!t.controlsAreVisible) {
-                                        t.showControls();
-                                    }
-                                    //t.killControlsTimer('move');
-                                    if(!t.options.alwaysShowControls) {
-                                        t.startControlsTimer(2500);
-                                    }
+                                if(!t.controlsAreVisible) {
+                                    t.showControls();
+                                }
+                                //t.killControlsTimer('move');
+                                if(!t.options.alwaysShowControls) {
+                                    t.startControlsTimer(2500);
                                 }
                             })
                             .bind('mouseleave', function() {
-                                if(t.controlsEnabled) {
-                                    if(!t.media.paused && !t.options.alwaysShowControls) {
-                                        t.startControlsTimer(1000);
-                                    }
+                                if(!t.media.paused && !t.options.alwaysShowControls) {
+                                    t.startControlsTimer(1000);
                                 }
                             });
-                    }
-                    
-                    if(t.options.hideVideoControlsOnLoad) {
-                        t.hideControls();
                     }
                     
                     // check for autoplay
@@ -346,7 +317,6 @@
                             // then resize to the real dimensions
                             if(t.options.videoHeight <= 0 && t.domNode.getAttribute('height') === null && !isNaN(e.target.videoHeight)) {
                                 t.setControlsSize();
-                                // t.media.setVideoSize(e.target.videoWidth, e.target.videoHeight);
                             }
                         }, false);
                     }
@@ -372,7 +342,7 @@
                         
                     if(t.options.loop) {
                         t.player.play();
-                    } else if(!t.options.alwaysShowControls && t.controlsEnabled) {
+                    } else if(!t.options.alwaysShowControls) {
                         t.showControls();
                     }
                 }, false);
