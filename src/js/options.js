@@ -211,6 +211,15 @@
                     
                     player.changeAspectRatio();
                 }
+            },
+            {
+                keys: [73], // i
+                action: function(player, keyCode, activeModifiers) {
+                    if(!activeModifiers.ctrl)
+                        return;
+                    
+                    player.openInfoWindow();
+                }
             }
         ]
     };

@@ -46,13 +46,12 @@ $('#player').mediaelementplayer({
             if(entry == null)
                 return false;
             
-            mainMediaElement.stop();
+            mainMediaElement.pause();
             entry.file(function fff(file) {
                 mainMediaElement.player.openedFile = file;
                 mainMediaElement.player.openedFileEntry = entry;
                 
-                mainMediaElement.setSrc(window.URL.createObjectURL(file));
-                mainMediaElement.play();
+                mainMediaElement.player.setSrc(window.URL.createObjectURL(file));
             });
             return true;
         }

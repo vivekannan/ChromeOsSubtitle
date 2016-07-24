@@ -9,7 +9,7 @@
             '<span class="mejs-currenttime">00:00</span>' +
         '</div>')
             .appendTo(controls);
-            
+        
         t.currenttime = t.controls.find('.mejs-currenttime');
         
         media.addEventListener('timeupdate', function() {
@@ -22,7 +22,10 @@
         t.currenttime[0].addEventListener('click', function() {
             showRemaining = !showRemaining;
             
-            t.updateCurrent();
+            if(player.isPaused())
+                t.updateCurrent();
+            
+            t.setControlsSize();
         })
     }
     

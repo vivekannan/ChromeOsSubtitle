@@ -40,15 +40,6 @@
     
     MediaElementPlayer.prototype.enterFullScreen = function() {
         this.container[0].webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-        
-        this.container
-            .addClass('mejs-container-fullscreen')
-            .width('100%')
-            .height('100%');
-        
-        this.layers.children('div')
-            .width('100%')
-            .height('100%');
     }
     
     MediaElementPlayer.prototype.exitFullScreen = function() {

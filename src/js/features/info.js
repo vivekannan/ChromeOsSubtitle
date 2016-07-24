@@ -1,5 +1,3 @@
-var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
-
 (function($) {
     MediaElementPlayer.prototype.buildinfo = function(player, controls, layers, media) {
         var
@@ -34,8 +32,6 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
         
         function hideInfo(e) {
             info.css('visibility', 'hidden');
-            if(player.media.paused)
-                $(".mejs-overlay-play").show();
                 
             e.preventDefault();
             e.stopPropagation();
@@ -46,19 +42,7 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
         t.openInfoWindow = function() {
             $('.me-window').css('visibility', 'hidden');
             info.css('visibility', 'visible');
-            $(".mejs-overlay-play").hide();
             player.container.click(hideInfo);
         };
-        
-        var open =
-            $('<div class="mejs-button mejs-info-button mejs-info" >' +
-                '<button type="button" title="' + mejs.i18n.t('About...') + '" aria-label="' + mejs.i18n.t('About...') + '"></button>' +
-                '</div>')
-            .appendTo(controls)
-            .click(function(e) {
-                e.preventDefault();
-                t.openInfoWindow();
-                return false;
-            });
     }
 })(mejs.$);

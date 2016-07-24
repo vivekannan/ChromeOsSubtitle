@@ -431,11 +431,10 @@
                     '<div class="mejs-overlay-loading"><span></span></div>' +
                     '</div>')
                 .hide() // start out hidden
-                .appendTo(layers),
-                // this needs to come last so it's on top
-                bigPlay =
-                $('<div class="mejs-overlay mejs-layer mejs-overlay-play">' +
-                    '</div>')
+                .appendTo(layers);
+            
+            // this needs to come last so it's on top
+            $('<div class="mejs-overlay mejs-layer mejs-overlay-play"></div>')
                 .appendTo(layers)
                 .click(function() {
                     if(media.paused) {
@@ -648,7 +647,7 @@
         changeAspectRatio: function() {
             this.currentAspectRatio = (this.currentAspectRatio + 1) % this.options.aspectRatios.length;
             this.resizeVideo();
-            this.setNotification('Aspect Ratio: ' + this.options.aspectRatiosText[this.currentAspectRatio]);
+            this.setNotification('Aspect Ratio ' + this.options.aspectRatiosText[this.currentAspectRatio]);
         },
         
         moveCaptions: function(keyCode) {
@@ -656,16 +655,16 @@
             
             switch(keyCode) {
                 case 37:
-                    c.style.left = mejs.Utility.addToPixel(c.style.left, -3);
+                    c.style.left = mejs.Utility.addToPixel(c.style.left, -8);
                     break;
                 case 38:
-                    c.style.bottom = mejs.Utility.addToPixel(c.style.bottom, 3);
+                    c.style.bottom = mejs.Utility.addToPixel(c.style.bottom, 8);
                     break;
                 case 39:
-                    c.style.left = mejs.Utility.addToPixel(c.style.left, 3);
+                    c.style.left = mejs.Utility.addToPixel(c.style.left, 8);
                     break;
                 case 40:
-                    c.style.bottom = mejs.Utility.addToPixel(c.style.bottom, -3);
+                    c.style.bottom = mejs.Utility.addToPixel(c.style.bottom, -8);
                     break;
             }
         }
