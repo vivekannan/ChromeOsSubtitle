@@ -57,5 +57,9 @@ mejs.Utility = {
             secs += Number(SMPTE[i]) * multiplier;
         }
         return Number(secs.toFixed(decimalLen));
+    },
+    
+    addToPixel: function(pixelString, addValue) {
+        return (parseFloat(pixelString) || 0) + addValue;
     }
 };

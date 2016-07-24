@@ -59,15 +59,23 @@
             {
                 keys: [38], // UP
                 action: function(player, keyCode, activeModifiers) {
-                    if(activeModifiers.ctrl)
+                    if(activeModifiers.alt && activeModifiers.ctrl) {
+                        player.moveCaptions(38);
+                    }
+                    else if(activeModifiers.ctrl) {
                         player.setVolume(Math.min(player.getVolume() + 0.1, 1));
+                    }
                 }
             },
             {
                 keys: [40], // DOWN
                 action: function(player, keyCode, activeModifiers) {
-                    if(activeModifiers.ctrl)
+                    if(activeModifiers.alt && activeModifiers.ctrl) {
+                        player.moveCaptions(40);
+                    }
+                    else if(activeModifiers.ctrl) {
                         player.setVolume(Math.max(player.getVolume() - 0.1, 0));
+                    }
                 }
             },
             {
@@ -76,7 +84,10 @@
                     227 // Google TV rewind
                 ],
                 action: function(player, keyCode, activeModifiers) {
-                    if(!isNaN(player.getDuration()) && player.getDuration() > 0) {
+                    if(activeModifiers.alt && activeModifiers.ctrl) {
+                        player.moveCaptions(37);
+                    }
+                    else if(!isNaN(player.getDuration()) && player.getDuration() > 0) {
                         if(player.isVideo) {
                             player.showControls();
                             player.startControlsTimer();
@@ -95,7 +106,10 @@
                     228 // Google TV forward
                 ], 
                 action: function(player, keyCode, activeModifiers) {
-                    if(!isNaN(player.getDuration()) && player.getDuration() > 0) {
+                    if(activeModifiers.alt && activeModifiers.ctrl) {
+                        player.moveCaptions(39);
+                    }
+                    else if(!isNaN(player.getDuration()) && player.getDuration() > 0) {
                         var seekDuration = activeModifiers.shift ? 3 : (activeModifiers.alt ? 10 : (activeModifiers.ctrl ? 60 : undefined))
                         
                         if(seekDuration)

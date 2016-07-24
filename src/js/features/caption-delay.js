@@ -15,10 +15,12 @@
         t.decCaptionDelay = function() {
             t.capDelayInput.value = (Number(t.capDelayInput.value) - 0.1).toFixed(1);
             t.capDelayValue = Number(t.capDelayInput.value);
+            t.setNotification('Captions Delay: ' + t.capDelayValue + 's');
         };
         t.incCaptionDelay = function() {
             t.capDelayInput.value = (Number(t.capDelayInput.value) + 0.1).toFixed(1);
             t.capDelayValue = Number(t.capDelayInput.value);
+            t.setNotification('Captions Delay: ' + t.capDelayValue + 's');
         };
         
         // create the buttons

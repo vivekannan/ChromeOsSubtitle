@@ -657,6 +657,25 @@
             this.currentAspectRatio = (this.currentAspectRatio + 1) % this.options.aspectRatios.length;
             this.resizeVideo();
             this.setNotification('Aspect Ratio: ' + this.options.aspectRatiosText[this.currentAspectRatio]);
+        },
+        
+        moveCaptions: function(keyCode) {
+            var c = $('.mejs-captions-position')[0];
+            
+            switch(keyCode) {
+                case 37:
+                    c.style.left = mejs.Utility.addToPixel(c.style.left, -3);
+                    break;
+                case 38:
+                    c.style.bottom = mejs.Utility.addToPixel(c.style.bottom, 3);
+                    break;
+                case 39:
+                    c.style.left = mejs.Utility.addToPixel(c.style.left, 3);
+                    break;
+                case 40:
+                    c.style.bottom = mejs.Utility.addToPixel(c.style.bottom, -3);
+                    break;
+            }
         }
     };
     
