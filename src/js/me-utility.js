@@ -20,12 +20,11 @@ mejs.Utility = {
     secondsToTimeCode: function(time) {
         var hours = Math.floor(time / 3600) % 24,
             minutes = Math.floor(time / 60) % 60,
-            seconds = Math.floor(time % 60),
-            result = (hours > 0 ? (hours < 10 ? '0' + hours : hours) + ':' : '') +
-                (minutes < 10 ? '0' + minutes : minutes) + ':' +
-                (seconds < 10 ? '0' + seconds : seconds);
+            seconds = Math.floor(time % 60);
         
-        return result;
+        return (hours ? ('0' + hours).slice(-2) + ':' : '') +
+                ('0' + minutes).slice(-2) + ':' +
+                ('0' + seconds).slice(-2);
     },
     
     timeCodeToSeconds: function(hh_mm_ss_ff) {

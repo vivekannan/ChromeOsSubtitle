@@ -137,7 +137,7 @@ var openSubsLang = [
                             $('#label_opensubtitle').css('visibility', 'hidden');
                         }
                         
-                        $('#encoding-selector').val("UTF-8");
+                        $('#encoding-selector').val("iso-8859-16");
                         
                         t.tracks = t.tracks.filter(function(el) {
                             return el.srclang != 'opensubtitle';

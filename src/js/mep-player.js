@@ -349,12 +349,8 @@
                 
                 // resize on the first play
                 t.media.addEventListener('loadedmetadata', function(e) {
-                    if(t.updateDuration) {
-                        t.updateDuration();
-                    }
-                    if(t.updateCurrent) {
-                        t.updateCurrent();
-                    }
+                    t.updateDuration();
+                    t.updateCurrent();
                     
                     if(!t.isFullScreen) {
                         t.setControlsSize();
@@ -426,7 +422,6 @@
         },
         
         buildoverlays: function(player, controls, layers, media) {
-            var t = this;
             if(!player.isVideo)
                 return;
             
@@ -484,10 +479,6 @@
             
             // show/hide loading
             media.addEventListener('loadeddata', function() {
-                // for some reason Chrome is firing this event
-                //if (mejs.MediaFeatures.isChrome && media.getAttribute && media.getAttribute('preload') === 'none')
-                //	return;
-                
                 loading.show();
                 controls.find('.mejs-time-buffering').show();
                 player.play();
@@ -606,6 +597,7 @@
         
         setSrc: function(src) {
             this.media.src = src;
+            document.title = this.openedFile.name;
         },
         
         resetPlaybackRate: function() {
