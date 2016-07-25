@@ -237,10 +237,6 @@ a:visited {
     background: transparent url(controls.svg) no-repeat;
 }
 
-.no-svg .mejs-controls .mejs-button button {
-    background-image: url(controls.png);
-}
-
 /* :focus for accessibility */
 .mejs-controls .mejs-button button:focus {
     outline: dotted 1px white;

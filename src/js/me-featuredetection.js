@@ -16,10 +16,6 @@ mejs.MediaFeatures = {
         t.isWebkit = (ua.match(/webkit/gi) !== null);
         t.hasTouch = ('ontouchstart' in window);
         
-        // borrowed from Modernizr
-        t.svg = !!document.createElementNS &&
-            !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect;
-        
         // create HTML5 media elements for IE before 9, get a <video> element for fullscreen detection
         for(i = 0; i < html5Elements.length; i++) {
             v = document.createElement(html5Elements[i]);

@@ -71,11 +71,11 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                 // DESKTOP: use MediaElementPlayer controls
                 
                 // remove native controls
-                t.media.removeAttribute('controls');
+                t.media.controls = false;
                 
                 // build container
                 t.container =
-                    $('<div class="mejs-container ' + (mejs.MediaFeatures.svg ? 'svg' : 'no-svg') + '">' +
+                    $('<div class="mejs-container svg">' +
                         '<div class="mejs-inner">' +
                             '<div class="mejs-mediaelement"></div>' +
                             '<div class="mejs-layers"></div>' +
