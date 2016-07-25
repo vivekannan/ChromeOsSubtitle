@@ -7,7 +7,7 @@
         videoVolume: 'vertical'
     });
     
-    MediaElementPlayer.prototype.buildvolume = function(player, controls, layers, media) {
+    MediaElementPlayer.prototype.buildvolume = function() {
         // Android and iOS don't support volume controls
         if(mejs.MediaFeatures.hasTouch && this.hideVolumeOnTouchDevices)
             return;
@@ -26,7 +26,7 @@
                 '<div class="mejs-horizontal-volume-handle"></div>' + // handle
                 '</div>'
             )
-            .appendTo(controls) :
+            .appendTo(t.controls) :
             
             // vertical version
             $('<div class="mejs-button mejs-volume-button mejs-mute">' +
@@ -37,14 +37,13 @@
                 '<div class="mejs-volume-handle"></div>' + // handle
                 '</div>' +
                 '</div>')
-            .appendTo(controls),
+            .appendTo(t.controls),
             volumeSlider = t.container.find('.mejs-volume-slider, .mejs-horizontal-volume-slider'),
             volumeTotal = t.container.find('.mejs-volume-total, .mejs-horizontal-volume-total'),
             volumeCurrent = t.container.find('.mejs-volume-current, .mejs-horizontal-volume-current'),
             volumeHandle = t.container.find('.mejs-volume-handle, .mejs-horizontal-volume-handle'),
             
             positionVolumeHandle = function(volume, secondTry) {
-            
                 if(!volumeSlider.is(':visible') && typeof secondTry == 'undefined') {
                     volumeSlider.show();
                     positionVolumeHandle(volume, true);
@@ -53,8 +52,7 @@
                 }
                 
                 // correct to 0-1
-                volume = Math.max(0, volume);
-                volume = Math.min(volume, 1);
+                volume = Math.min(Math.max(0, volume), 1);
                 
                 // ajust mute button style
                 if(volume == 0) {
@@ -138,11 +136,11 @@
                 
                 // set the media object (this will trigger the volumechanged event)
                 if(volume == 0) {
-                    player.setMuted(true);
+                    t.setMuted(true);
                 } else {
-                    player.setMuted(false);
+                    t.setMuted(false);
                 }
-                player.setVolume(volume);
+                t.setVolume(volume);
             },
             mouseIsDown = false,
             mouseIsOver = false;
@@ -185,17 +183,17 @@
             
         // MUTE button
         mute.find('button').click(function() {
-            player.setMuted(!media.muted);
+            t.setMuted(!t.isMuted());
         });
         
         // listen for volume change events from other sources
-        media.addEventListener('volumechange', function(e) {
+        t.media.addEventListener('volumechange', function(e) {
             if(!mouseIsDown) {
-                if(media.muted) {
+                if(t.isMuted()) {
                     positionVolumeHandle(0);
                     mute.removeClass('mejs-mute').addClass('mejs-unmute');
                 } else {
-                    positionVolumeHandle(media.volume);
+                    positionVolumeHandle(t.getVolume());
                     mute.removeClass('mejs-unmute').addClass('mejs-mute');
                 }
             }
@@ -203,16 +201,16 @@
         
         if(t.container.is(':visible')) {
             // set initial volume
-            positionVolumeHandle(player.options.startVolume);
+            positionVolumeHandle(t.options.startVolume);
             
             // mutes the media and sets the volume icon muted if the initial volume is set to 0
-            if(player.options.startVolume === 0) {
-                player.setMuted(true);
+            if(t.options.startVolume === 0) {
+                t.setMuted(true);
             }
             
             // shim gets the startvolume as a parameter, but we have to set it on the native <video> and <audio> elements
-            if(media.pluginType === 'native') {
-                player.setVolume(player.options.startVolume);
+            if(t.media.pluginType === 'native') {
+                t.setVolume(t.options.startVolume);
             }
         }
     }

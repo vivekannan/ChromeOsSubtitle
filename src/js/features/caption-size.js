@@ -1,7 +1,7 @@
 (function($) {
-    MediaElementPlayer.prototype.buildsubsize = function(player, controls, layers, media) {
-        var captionSelector = player.captionsButton.find('.mejs-captions-selector');
-        var t = this;
+    MediaElementPlayer.prototype.buildsubsize = function() {
+        var t = this,
+            captionSelector = t.captionsButton.find('.mejs-captions-selector');
         
         function updateCaptionSize(value) {
             $('.mejs-captions-layer').css({

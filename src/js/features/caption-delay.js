@@ -1,8 +1,8 @@
 (function($) {
-    MediaElementPlayer.prototype.buildsubdelay = function(player, controls, layers, media) {
-        var captionSelector = player.captionsButton.find('.mejs-captions-selector');
-        var
-            t = this;
+    MediaElementPlayer.prototype.buildsubdelay = function() {
+        var t = this,
+            captionSelector = t.captionsButton.find('.mejs-captions-selector');
+        
         var value =
             $('<input style="background-color: transparent; width: 41px; color: white; font-size: 10px;clear: none; margin:0px 0px 0px 0px;"></input>').
         on('input', function(e) {
@@ -45,7 +45,7 @@
             .append(inc);
         captionSelector.find('ul').append(line);
         
-        media.addEventListener('loadeddata', function() {
+        t.media.addEventListener('loadeddata', function() {
             t.capDelayInput.value = 0;
             t.capDelayValue = 0;
         });

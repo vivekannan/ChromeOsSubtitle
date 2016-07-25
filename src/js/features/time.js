@@ -2,36 +2,36 @@
     var showRemaining = false;
     
     // current and duration 00:00 / 00:00
-    MediaElementPlayer.prototype.buildcurrent = function(player, controls, layers, media) {
+    MediaElementPlayer.prototype.buildcurrent = function() {
         var t = this;
         
         $('<div class="mejs-time">' +
             '<span class="mejs-currenttime">00:00</span>' +
         '</div>')
-            .appendTo(controls);
+            .appendTo(t.controls);
         
         t.currenttime = t.controls.find('.mejs-currenttime');
         
-        media.addEventListener('timeupdate', function() {
-            if(!player.controlsAreVisible)
+        t.media.addEventListener('timeupdate', function() {
+            if(!t.controlsAreVisible)
                 return;
             
-            player.updateCurrent();
+            t.updateCurrent();
         }, false);
         
         t.currenttime[0].addEventListener('click', function() {
             showRemaining = !showRemaining;
             
-            if(player.isPaused())
+            if(t.isPaused())
                 t.updateCurrent();
             
             t.setControlsSize();
         })
     }
     
-    MediaElementPlayer.prototype.buildduration = function(player, controls, layers, media) {
+    MediaElementPlayer.prototype.buildduration = function() {
         $('<span>/</span><span class="mejs-duration">00:00</span>')
-            .appendTo(controls.find('.mejs-time'));
+            .appendTo(this.controls.find('.mejs-time'));
         
         this.durationD = this.controls.find('.mejs-duration');
     }
@@ -49,10 +49,10 @@
     
     MediaElementPlayer.prototype.updateDuration = function() {
         //Toggle the long video class if the video is longer than an hour.
-        this.container.toggleClass("mejs-long-video", this.media.duration > 3600);
+        this.container.toggleClass("mejs-long-video", this.getDuration() > 3600);
         
-        if(this.durationD && this.media.duration) {
-            this.durationD.html(mejs.Utility.secondsToTimeCode(this.media.duration));
+        if(this.durationD && this.getDuration()) {
+            this.durationD.html(mejs.Utility.secondsToTimeCode(this.getDuration()));
         }
     }
 })(mejs.$);

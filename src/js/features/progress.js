@@ -1,6 +1,8 @@
 (function($) {
     // progress/loaded bar
-    MediaElementPlayer.prototype.buildprogress = function(player, controls, layers, media) {
+    MediaElementPlayer.prototype.buildprogress = function() {
+        var t = this;
+        
         $('<div class="mejs-time-rail">' +
                 '<span class="mejs-time-total">' +
                 '<span class="mejs-time-buffering"></span>' +
@@ -13,17 +15,17 @@
                 '</span>' +
                 '</span>' +
                 '</div>')
-            .appendTo(controls);
-        controls.find('.mejs-time-buffering').hide();
+            .appendTo(t.controls);
+        
+        t.controls.find('.mejs-time-buffering').hide();
         
         var
-            t = this,
-            total = controls.find('.mejs-time-total'),
-            loaded = controls.find('.mejs-time-loaded'),
-            current = controls.find('.mejs-time-current'),
-            handle = controls.find('.mejs-time-handle'),
-            timefloat = controls.find('.mejs-time-float'),
-            timefloatcurrent = controls.find('.mejs-time-float-current'),
+            total = t.controls.find('.mejs-time-total'),
+            loaded = t.controls.find('.mejs-time-loaded'),
+            current = t.controls.find('.mejs-time-current'),
+            handle = t.controls.find('.mejs-time-handle'),
+            timefloat = t.controls.find('.mejs-time-float'),
+            timefloatcurrent = t.controls.find('.mejs-time-float-current'),
             handleMouseMove = function(e) {
                 // mouse position relative to the object
                 var x = e.pageX,
@@ -32,7 +34,7 @@
                     newTime = 0,
                     pos = 0;
                 
-                if(player.getDuration()) {
+                if(t.getDuration()) {
                     if(x < offset.left) {
                         x = offset.left;
                     } else if(x > width + offset.left) {
@@ -40,11 +42,11 @@
                     }
                     
                     pos = x - offset.left;
-                    newTime = (pos / width) * player.getDuration();
+                    newTime = (pos / width) * t.getDuration();
                     
                     // seek to where the mouse is
-                    if(mouseIsDown && newTime !== player.getCurrentTime()) {
-                        player.setCurrentTime(newTime);
+                    if(mouseIsDown && newTime !== t.getCurrentTime()) {
+                        t.setCurrentTime(newTime);
                     }
                     
                     // position floating time box
@@ -95,21 +97,21 @@
             });
         
         // loading
-        media.addEventListener('progress', function(e) {
-            if(!player.controlsAreVisible)
+        t.media.addEventListener('progress', function(e) {
+            if(!t.controlsAreVisible)
                 return;
             
-            player.setProgressRail(e);
-            player.setCurrentRail(e);
+            t.setProgressRail(e);
+            t.setCurrentRail(e);
         });
         
         // current time
-        media.addEventListener('timeupdate', function(e) {
-            if(!player.controlsAreVisible)
+        t.media.addEventListener('timeupdate', function(e) {
+            if(!t.controlsAreVisible)
                 return;
             
-            player.setProgressRail(e);
-            player.setCurrentRail(e);
+            t.setProgressRail(e);
+            t.setCurrentRail(e);
         });
         
         // store for later use

@@ -1,5 +1,5 @@
 (function($) {
-    MediaElementPlayer.prototype.buildinfo = function(player, controls, layers, media) {
+    MediaElementPlayer.prototype.buildinfo = function() {
         var
             t = this;
         var infoText =
@@ -22,7 +22,7 @@
         infoText = infoText + '<li>Subtitles service powered by <a href="http://www.OpenSubtitles.org" target="_blank">www.OpenSubtitles.org</a>. More uploaded subs means more subs available. Please upload <a href="http://www.opensubtitles.org/upload" target="_blank">here</a> jour subs.<br/><a href="http://www.OpenSubtitles.org" target="_blank"><img src="' + mediaelement_url + 'opensubtitle.gif"/></a></li>';
         infoText = infoText + '</ul>[Click the box to close the info window]</div>'
         
-        var info = $(infoText).appendTo(controls[0].parentElement);
+        var info = $(infoText).appendTo(t.controls[0].parentElement);
         
         info.find("a").click(function(e) {
             window.open(this.href, '_blank');
@@ -35,14 +35,14 @@
                 
             e.preventDefault();
             e.stopPropagation();
-            player.container.off("click", hideInfo);
+            t.container.off("click", hideInfo);
             return false;
         }
         
         t.openInfoWindow = function() {
             $('.me-window').css('visibility', 'hidden');
             info.css('visibility', 'visible');
-            player.container.click(hideInfo);
+            t.container.click(hideInfo);
         };
     }
 })(mejs.$);

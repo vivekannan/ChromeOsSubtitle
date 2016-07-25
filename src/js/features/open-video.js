@@ -1,45 +1,50 @@
 (function($) {
-    MediaElementPlayer.prototype.buildsource = function(player, controls, layers, media) {
+    MediaElementPlayer.prototype.buildsource = function() {
         var t = this,
             openFileInput = $('<input style="display:none" type="file" id="openfile_input"/>')
-            .appendTo(controls);
+            .appendTo(t.controls);
+        
         t.openedFile = null;
+        
         var open = $('<div class="mejs-button mejs-source-button mejs-source" >' +
                 '<button type="button" title="' + mejs.i18n.t('Open video...') + '" aria-label="' + mejs.i18n.t('Open video...') + '"></button>' +
                 '</div>')
-            .appendTo(controls);
-        player.openFileForm = function() {
-            if(media.duration && !media.paused)
-                player.pause();
+            .appendTo(t.controls);
+        
+        t.openFileForm = function() {
+            if(t.getDuration() && !t.isPaused())
+                t.pause();
             
             if(packaged_app) {
                 chrome.fileSystem.chooseEntry({
                     type: "openFile"
                 }, function(entry) {
                     entry.file(function fff(file) {
-                        player.stop();
-                        player.tracks = [];
+                        t.stop();
+                        t.tracks = [];
                         
                         t.openedFile = file;
                         t.openedFileEntry = entry;
-                        player.setSrc(window.URL.createObjectURL(file));
+                        t.setSrc(window.URL.createObjectURL(file));
                     });
                 });
             } else {
                 openFileInput[0].click();
             }
         };
+        
         open.click(function(e) {
             e.preventDefault();
-            player.openFileForm();
+            t.openFileForm();
             return false;
         });
+        
         openFileInput.change(function(e) {
-            player.stop();
-            player.tracks = [];
-            var path = window.URL.createObjectURL(openFileInput[0].files[0]);
+            t.stop();
+            t.tracks = [];
+            
             t.openedFile = openFileInput[0].files[0];
-            player.setSrc(path);
+            t.setSrc(window.URL.createObjectURL(t.openedFile));
         });
     }
 })(mejs.$);

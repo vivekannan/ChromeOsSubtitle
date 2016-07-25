@@ -1,7 +1,5 @@
 var myURL = window.URL || window.webkitURL;
 
-var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
-
 var mainMediaElement = null;
 
 $('#main').append('<video id="player" controls="controls"></video>');
@@ -43,7 +41,7 @@ $('#player').mediaelementplayer({
             
             entry = window.launchData.items[0].entry;
             
-            if(entry == null)
+            if(entry === null)
                 return false;
             
             mainMediaElement.pause();
