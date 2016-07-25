@@ -3,38 +3,34 @@
         fullscreenText: mejs.i18n.t('Fullscreen')
     });
     
-    MediaElementPlayer.prototype.buildfullscreen = function(player, controls, layers, media) {
-        if(!player.isVideo)
+    MediaElementPlayer.prototype.buildfullscreen = function() {
+        if(!this.isVideo)
             return;
         
-        var fullscreenBtn =
-            $('<div class="mejs-button mejs-fullscreen-button">' +
+        var t = this,
+            fullscreenBtn = mejs.Utility.createNestedElement('<div class="mejs-button mejs-fullscreen-button">' +
                 '<button type="button" title="' + this.options.fullscreenText + '" aria-label="' + this.options.fullscreenText + '"></button>' +
-                '</div>')
-            .appendTo(controls)
-            .click(function() {
-                if(document.webkitIsFullScreen) {
-                    player.exitFullScreen();
-                } else {
-                    player.enterFullScreen();
-                }
-            });
+                '</div>');
         
-        player.fullscreenBtn = fullscreenBtn;
+        fullscreenBtn.addEventListener('click', function() {
+            if(document.webkitIsFullScreen) {
+                t.exitFullScreen();
+            } else {
+                t.enterFullScreen();
+            }
+        });
+        
+        t.controls[0].appendChild(fullscreenBtn);
         
         document.addEventListener("webkitfullscreenchange", function() {
             if(document.webkitIsFullScreen) {
-                player.fullscreenBtn
-                    .removeClass('mejs-fullscreen')
-                    .addClass('mejs-unfullscreen');
+                fullscreenBtn.className = 'mejs-button mejs-fullscreen-button mejs-unfullscreen';
             }
             else {
-                player.fullscreenBtn
-                    .removeClass('mejs-unfullscreen')
-                    .addClass('mejs-fullscreen');
+                fullscreenBtn.className = 'mejs-button mejs-fullscreen-button';
             }
             
-            player.setControlsSize();
+            t.setControlsSize();
         }, false);
     }
     

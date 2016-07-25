@@ -2,48 +2,8 @@
 Default options
 */
 mejs.MediaElementDefaults = {
-    // allows testing on HTML5, flash, silverlight
-    // auto: attempts to detect what the browser can do
-    // auto_plugin: prefer plugins and then attempt native HTML5
-    // native: forces HTML5 playback
-    // shim: disallows HTML5, will attempt either Flash or Silverlight
-    // none: forces fallback view
-    mode: 'auto',
-    // remove or reorder to change plugin priority and availability
-    plugins: ['flash', 'silverlight', 'youtube', 'vimeo'],
-    // shows debug errors on screen
-    enablePluginDebug: false,
     // overrides the type specified, useful for dynamic instantiation
-    type: '',
-    // name of flash file
-    flashName: 'flashmediaelement.swf',
-    // streamer for RTMP streaming
-    flashStreamer: '',
-    // turns on the smoothing filter in Flash
-    enablePluginSmoothing: false,
-    // enabled pseudo-streaming (seek) on .mp4 files
-    enablePseudoStreaming: false,
-    // start query parameter sent to server for pseudo-streaming
-    pseudoStreamingStartQueryParam: 'start',
-    // name of silverlight file
-    silverlightName: 'silverlightmediaelement.xap',
-    // default if the <video width> is not specified
-    defaultVideoWidth: 480,
-    // default if the <video height> is not specified
-    defaultVideoHeight: 270,
-    // overrides <video width>
-    pluginWidth: -1,
-    // overrides <video height>
-    pluginHeight: -1,
-    // additional plugin variables in 'key=value' form
-    pluginVars: [],
-    // rate in milliseconds for Flash and Silverlight to fire the timeupdate event
-    // larger number is less accurate, but less strain on plugin->JavaScript bridge
-    timerRate: 250,
-    // initial volume for player
-    startVolume: 0.8,
-    success: function() {},
-    error: function() {}
+    type: ''
 };
 
 /*
@@ -83,7 +43,7 @@ mejs.HtmlMediaElementShim = {
         controls = !(typeof controls == 'undefined' || controls === null || controls === 'false');
         
         // test for HTML5 and plugin capabilities
-        playback = this.determinePlayback(htmlMediaElement, options, mejs.MediaFeatures.supportsMediaTag, isMediaTag, src);
+        playback = this.determinePlayback(htmlMediaElement, options, isMediaTag, src);
         playback.url = (playback.url !== null) ? mejs.Utility.absolutizeUrl(playback.url) : '';
         
         // second fix for android
@@ -98,7 +58,7 @@ mejs.HtmlMediaElementShim = {
         return this.updateNative(playback, options, autoplay, preload);
     },
     
-    determinePlayback: function(htmlMediaElement, options, supportsMediaTag, isMediaTag, src) {
+    determinePlayback: function(htmlMediaElement, options, isMediaTag, src) {
         var
             mediaFiles = [],
             i,
@@ -180,7 +140,7 @@ mejs.HtmlMediaElementShim = {
         }
         
         // test for native playback first
-        if(supportsMediaTag && (options.mode === 'auto' || options.mode === 'auto_plugin' || options.mode === 'native') && !(mejs.MediaFeatures.isBustedNativeHTTPS)) {
+        if(options.mode === 'auto' || options.mode === 'auto_plugin' || options.mode === 'native') {
             if(!isMediaTag) {
                 // create a real HTML5 Media Element 
                 dummy = document.createElement(result.isVideo ? 'video' : 'audio');

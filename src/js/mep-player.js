@@ -536,7 +536,7 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
         },
         
         play: function() {
-            if(this.media.readyState !== 4) {
+            if(this.media.readyState === 0) {
                 this.openFileForm();
                 return;
             }
@@ -555,7 +555,7 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
         stop: function() {
             this.setNotification('￰■');
             
-            if(!this.media.paused) {
+            if(!this.isPaused()) {
                 this.media.pause();
                 $('.mejs-pause').removeClass('mejs-pause').addClass('mejs-play');
             }
@@ -646,22 +646,24 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
             
             if(wH * targetAspectRatio <= wW) {
                 //$(this.media).css('-webkit-transform', 'scale(' + (wH * targetAspectRatio) / this.media.videoWidth + ',' + wH / this.media.videoHeight + ')');
-                $(this.media).css({ 'width': wH * targetAspectRatio, 'height': wH });
+                this.media.style.width = wH * targetAspectRatio;
+                this.media.style.height = wH;
             }
             else {
                 //$(this.media).css('-webkit-transform', 'scale(' + wW / this.media.videoWidth + ',' + wW / (targetAspectRatio * this.media.videoHeight) + ')');
-                $(this.media).css({ 'width': wW, 'height': wW / targetAspectRatio });
+                this.media.style.width = wW;
+                this.media.style.height = wW / targetAspectRatio;
             }
         },
         
         changeAspectRatio: function() {
             this.currentAspectRatio = (this.currentAspectRatio + 1) % this.options.aspectRatios.length;
             this.resizeVideo();
-            this.setNotification('Aspect Ratio ' + this.options.aspectRatiosText[this.currentAspectRatio]);
+            this.setNotification('Aspect Ratio: ' + this.options.aspectRatiosText[this.currentAspectRatio]);
         },
         
         moveCaptions: function(keyCode) {
-            var c = $('.mejs-captions-position')[0];
+            var c = document.getElementsByClassName('mejs-captions-position')[0];
             
             switch(keyCode) {
                 case 37:

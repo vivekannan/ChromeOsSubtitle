@@ -128,18 +128,13 @@
                 }
                 
                 // ensure the volume isn't outside 0-1
-                volume = Math.max(0, volume);
-                volume = Math.min(volume, 1);
+                volume = Math.max(0, Math.min(volume, 1));
                 
-                // position the slider and handle			
+                // position the slider and handle
                 positionVolumeHandle(volume);
                 
                 // set the media object (this will trigger the volumechanged event)
-                if(volume == 0) {
-                    t.setMuted(true);
-                } else {
-                    t.setMuted(false);
-                }
+                volume === 0 ? t.setMuted(true) : t.setMuted(false);
                 t.setVolume(volume);
             },
             mouseIsDown = false,

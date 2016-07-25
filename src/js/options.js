@@ -218,7 +218,7 @@
                     if(!activeModifiers.ctrl)
                         return;
                     
-                    player.openInfoWindow();
+                    player.toggleInfo();
                 }
             }
         ]

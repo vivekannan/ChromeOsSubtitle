@@ -3,24 +3,22 @@
     MediaElementPlayer.prototype.buildprogress = function() {
         var t = this;
         
-        $('<div class="mejs-time-rail">' +
+        t.controls[0].appendChild(mejs.Utility.createNestedElement('<div class="mejs-time-rail">' +
                 '<span class="mejs-time-total">' +
-                '<span class="mejs-time-buffering"></span>' +
-                '<span class="mejs-time-loaded"></span>' +
-                '<span class="mejs-time-current"></span>' +
-                '<span class="mejs-time-handle"></span>' +
-                '<span class="mejs-time-float">' +
-                '<span class="mejs-time-float-current">00:00</span>' +
-                '<span class="mejs-time-float-corner"></span>' +
+                    '<span class="mejs-time-buffering"></span>' +
+                    '<span class="mejs-time-loaded"></span>' +
+                    '<span class="mejs-time-current"></span>' +
+                    '<span class="mejs-time-handle"></span>' +
+                    '<span class="mejs-time-float">' +
+                        '<span class="mejs-time-float-current">00:00</span>' +
+                        '<span class="mejs-time-float-corner"></span>' +
+                    '</span>' +
                 '</span>' +
-                '</span>' +
-                '</div>')
-            .appendTo(t.controls);
+            '</div>'));
         
         t.controls.find('.mejs-time-buffering').hide();
         
-        var
-            total = t.controls.find('.mejs-time-total'),
+        var total = t.controls.find('.mejs-time-total'),
             loaded = t.controls.find('.mejs-time-loaded'),
             current = t.controls.find('.mejs-time-current'),
             handle = t.controls.find('.mejs-time-handle'),
@@ -51,8 +49,8 @@
                     
                     // position floating time box
                     if(!mejs.MediaFeatures.hasTouch) {
-                        timefloat.css('left', pos);
-                        timefloatcurrent.html(mejs.Utility.secondsToTimeCode(newTime));
+                        timefloat[0].style.left = pos;
+                        timefloatcurrent[0].innerHTML = mejs.Utility.secondsToTimeCode(newTime);
                         timefloat.show();
                     }
                 }
@@ -138,7 +136,7 @@
             percent = Math.min(1, Math.max(0, percent));
             // update loaded bar
             if(t.loaded && t.total) {
-                t.loaded.width(t.total.width() * percent);
+                t.loaded[0].style.width = (parseFloat(t.total[0].style.width) || 0) * percent;
             }
         }
     }
@@ -146,15 +144,14 @@
     MediaElementPlayer.prototype.setCurrentRail = function() {
         var t = this;
         
-        if(t.media.currentTime != undefined && t.media.duration) {
+        if(t.getCurrentTime() != undefined && t.getDuration()) {
             // update bar and handle
             if(t.total && t.handle) {
-                var
-                    newWidth = t.total.width() * t.media.currentTime / t.media.duration,
+                var newWidth = (parseFloat(t.total[0].style.width) || 0) * t.getCurrentTime() / t.getDuration(),
                     handlePos = newWidth - t.handle.outerWidth(true) / 2;
                 
-                t.current.width(newWidth);
-                t.handle.css('left', handlePos);
+                t.current[0].style.width = newWidth;
+                t.handle[0].style.left = handlePos;
             }
         }
     }

@@ -60,5 +60,12 @@ mejs.Utility = {
     
     addToPixel: function(pixelString, addValue) {
         return (parseFloat(pixelString) || 0) + addValue;
+    },
+    
+    createNestedElement: function(content) {
+        var temp = document.createElement('div');
+        temp.innerHTML = content;
+        
+        return temp.firstChild;
     }
 };

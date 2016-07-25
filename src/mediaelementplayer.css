@@ -1,3 +1,8 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
 a:link {
     color: #ffffff
 }
@@ -283,10 +288,6 @@ a:visited {
 /* Start: Play/pause */
 .mejs-controls .mejs-source button {
     background-position: -144px 0;
-}
-
-.mejs-controls .mejs-info button {
-    background-position: -176px 0;
 }
 
 .mejs-controls .mejs-settings button {

@@ -42,7 +42,7 @@ $('#player').mediaelementplayer({
             entry = window.launchData.items[0].entry;
             
             if(entry === null)
-                return false;
+                return;
             
             mainMediaElement.pause();
             entry.file(function fff(file) {
@@ -51,12 +51,10 @@ $('#player').mediaelementplayer({
                 
                 mainMediaElement.player.setSrc(window.URL.createObjectURL(file));
             });
-            return true;
         }
         
         $(document).trigger("appStarted");
         
-        if(!openCmdLineVideo())
-            mediaElement.player.openInfoWindow();
+        openCmdLineVideo()
     }
 });

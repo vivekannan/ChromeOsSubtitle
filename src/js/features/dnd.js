@@ -30,7 +30,7 @@
                 }
             }
             
-            if(draggedMedia != null) {
+            if(draggedMedia !== null) {
                 t.stop();
                 t.openedFile = draggedMedia;
                 t.openedFileEntry = null;
@@ -40,7 +40,7 @@
             
             t.tracks = [];
             
-            if(draggedSrt != null) {
+            if(draggedSrt !== null) {
                 t.openSrtEntry(draggedSrt);
             }
         }, false);
