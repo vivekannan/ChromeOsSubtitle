@@ -92,7 +92,7 @@ zip.useWebWorkers = packaged_app;
             "windows-1253",
             "windows-1254 Latin-5",
             "windows-1255",
-            "windows-1256",
+            "windows-1256 Arabic",
             "windows-1257",
             "windows-1258",
             "gbk Chinese",
