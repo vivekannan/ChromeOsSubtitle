@@ -107,9 +107,7 @@
                     
                 // calculate the new volume based on the moust position
                 if(mode == 'vertical') {
-                
-                    var
-                        railHeight = volumeTotal.height(),
+                    var railHeight = volumeTotal.height(),
                         totalTop = parseInt(volumeTotal.css('top').replace(/px/, ''), 10),
                         newY = e.pageY - totalOffset.top;
                         
@@ -120,8 +118,7 @@
                         return;
                         
                 } else {
-                    var
-                        railWidth = volumeTotal.width(),
+                    var railWidth = volumeTotal.width(),
                         newX = e.pageX - totalOffset.left;
                         
                     volume = newX / railWidth;

@@ -734,7 +734,7 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
         };
     }
     
-    $(document).ready(function() {
+    document.addEventListener('ready', function() {
         // auto enable using JSON attribute
         $('.mejs-player').mediaelementplayer();
     });
