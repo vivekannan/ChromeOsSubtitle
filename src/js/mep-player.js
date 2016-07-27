@@ -335,11 +335,8 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                     }
                     t.pause();
                     
-                    if(t.setProgressRail)
-                        t.setProgressRail();
-                    if(t.setCurrentRail)
-                        t.setCurrentRail();
-                        
+                    t.setCurrentRail();
+                    
                     if(t.options.loop) {
                         t.play();
                     } else if(!t.options.alwaysShowControls) {
@@ -382,43 +379,24 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
         setControlsSize: function() {
             var t = this,
                 usedWidth = 0,
-                railWidth = 0,
-                rail = t.controls.find('.mejs-time-rail'),
-                total = t.controls.find('.mejs-time-total'),
-                current = t.controls.find('.mejs-time-current'),
-                loaded = t.controls.find('.mejs-time-loaded'),
-                others = rail.siblings();
-                
-            // allow the size to come from custom CSS
-            if(t.options && !t.options.autosizeProgress) {
-                // Also, frontends devs can be more flexible 
-                // due the opportunity of absolute positioning.
-                railWidth = parseInt(rail.style.width);
-            }
+                railWidth = 0;
             
-            // attempt to autosize
-            if(railWidth === 0 || !railWidth) {
-                // find the size of all the other controls besides the rail
-                others.each(function() {
-                    var $this = $(this);
-                    if(this.style.position != 'absolute' && $this.is(':visible')) {
-                        usedWidth += $(this).outerWidth(true);
-                    }
-                });
-                
-                // fit the rail into the remaining space
-                railWidth = t.controls.width() - usedWidth - (rail.outerWidth(true) - rail.width()) - 1;
-            }
+            // find the size of all the other controls besides the rail
+            usedWidth = 8 * 26 + t.time.outerWidth();
+            
+            // fit the rail into the remaining space
+            railWidth = t.controls.width() - usedWidth - (t.rail.outerWidth(true) - t.rail.width()) - 1;
             
             // outer area
-            rail.width(railWidth);
+            t.rail.width(railWidth);
             // dark space
-            total.width(railWidth - (total.outerWidth(true) - total.width()));
+            t.total.width(railWidth - 10);
             
-            if(t.setProgressRail)
-                t.setProgressRail();
-            if(t.setCurrentRail)
-                t.setCurrentRail();
+            if(t.getDuration()) {
+                t.loaded[0].style.width = railWidth - 10;
+            }
+            
+            t.setCurrentRail();
         },
         
         buildoverlays: function() {
@@ -442,23 +420,8 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
             $('<div class="mejs-overlay mejs-layer mejs-overlay-play"></div>')
                 .appendTo(t.layers)
                 .click(function() {
-                    if(t.isPaused()) {
-                        t.play();
-                    } else {
-                        t.pause();
-                    }
+                    t.isPaused() ? t.play() : t.pause();
                 });
-            
-            // show/hide big play button
-            t.media.addEventListener('play', function() {
-                loading.hide();
-                t.controls.find('.mejs-time-buffering').hide();
-            }, false);
-            
-            t.media.addEventListener('playing', function() {
-                loading.hide();
-                t.controls.find('.mejs-time-buffering').hide();
-            }, false);
             
             t.media.addEventListener('seeking', function() {
                 loading.show();
@@ -520,11 +483,6 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                     isLoaded: false
                 });
             });
-        },
-        
-        changeSkin: function(className) {
-            this.container[0].className = 'mejs-container ' + className;
-            this.setControlsSize();
         },
         
         isEnded: function() {

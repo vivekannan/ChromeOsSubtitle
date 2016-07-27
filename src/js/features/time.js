@@ -5,45 +5,39 @@
     MediaElementPlayer.prototype.buildcurrent = function() {
         var t = this;
         
-        $('<div class="mejs-time">' +
+        t.controls[0].appendChild(mejs.Utility.createNestedElement('<div class="mejs-time">' +
             '<span class="mejs-currenttime">00:00</span>' +
-        '</div>')
-            .appendTo(t.controls);
+        '</div>'));
         
+        t.time = t.controls.find('.mejs-time');
         t.currenttime = t.controls.find('.mejs-currenttime');
         
         t.media.addEventListener('timeupdate', function() {
-            if(!t.controlsAreVisible)
-                return;
-            
-            t.updateCurrent();
+            t.controlsAreVisible && t.updateCurrent();
         }, false);
         
         t.currenttime[0].addEventListener('click', function() {
-            showRemaining = !showRemaining;
-            
-            if(t.isPaused())
+            if(t.getDuration()) {
+                showRemaining = !showRemaining;
+                
                 t.updateCurrent();
-            
-            t.setControlsSize();
+                t.setControlsSize();
+            }
         })
     }
     
     MediaElementPlayer.prototype.buildduration = function() {
-        $('<span>/</span><span class="mejs-duration">00:00</span>')
-            .appendTo(this.controls.find('.mejs-time'));
+        $('<span>/</span><span class="mejs-duration">00:00</span></span>').appendTo(this.controls.find('.mejs-time'));
         
         this.durationD = this.controls.find('.mejs-duration');
     }
     
     MediaElementPlayer.prototype.updateCurrent = function() {
-        if(this.currenttime) {
-            if(showRemaining) {
-                this.currenttime.html('-' + mejs.Utility.secondsToTimeCode(this.getDuration() - this.getCurrentTime()));
-            }
-            else {
-                this.currenttime.html(mejs.Utility.secondsToTimeCode(this.getCurrentTime()));
-            }
+        if(showRemaining) {
+            this.currenttime.text('-' + mejs.Utility.secondsToTimeCode(this.getDuration() - this.getCurrentTime()));
+        }
+        else {
+            this.currenttime.text(mejs.Utility.secondsToTimeCode(this.getCurrentTime()));
         }
     }
     
@@ -52,7 +46,7 @@
         this.container.toggleClass("mejs-long-video", this.getDuration() > 3600);
         
         if(this.durationD && this.getDuration()) {
-            this.durationD.html(mejs.Utility.secondsToTimeCode(this.getDuration()));
+            this.durationD.text(mejs.Utility.secondsToTimeCode(this.getDuration()));
         }
     }
 })(mejs.$);

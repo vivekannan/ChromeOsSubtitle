@@ -348,7 +348,7 @@ a:visited {
     position: absolute;
     width: 180px;
     height: 10px;
-    border-radius: 2px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -380,26 +380,12 @@ a:visited {
     cursor: pointer;
 }
 
-.mejs-controls .mejs-time-rail .mejs-time-handle {
-    display: none;
-    position: absolute;
-    margin: 0;
-    width: 10px;
-    background: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    border: solid 2px #333;
-    top: -2px;
-    text-align: center;
-}
-
 .mejs-controls .mejs-time-rail .mejs-time-float {
     position: absolute;
     display: none;
     background: #eee;
     width: 36px;
     height: 17px;
-    border: solid 1px #333;
     top: -26px;
     margin-left: -24px;
     text-align: center;

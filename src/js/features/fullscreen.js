@@ -29,8 +29,6 @@
             else {
                 fullscreenBtn.className = 'mejs-button mejs-fullscreen-button';
             }
-            
-            t.setControlsSize();
         }, false);
     }
     
