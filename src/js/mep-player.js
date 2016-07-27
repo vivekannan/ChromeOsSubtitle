@@ -326,22 +326,7 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                 
                 // ended for all
                 t.media.addEventListener('ended', function(e) {
-                    if(t.options.autoRewind) {
-                        try {
-                            t.setCurrentTime(0);
-                        } catch(exp) {
-                        
-                        }
-                    }
-                    t.pause();
-                    
-                    t.setCurrentRail();
-                    
-                    if(t.options.loop) {
-                        t.play();
-                    } else if(!t.options.alwaysShowControls) {
-                        t.showControls();
-                    }
+                    t.next();
                 }, false);
                 
                 // resize on the first play
@@ -456,7 +441,7 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
             
             // error handling
             t.media.addEventListener('error', function(e) {
-                if(t.getSrc() === '')
+                if(!t.getSrc())
                     return;
                 
                 loading.hide();

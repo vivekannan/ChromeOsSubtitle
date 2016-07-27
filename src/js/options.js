@@ -19,10 +19,6 @@
         audioHeight: -1,
         // initial volume when the player starts (overrided by user cookie)
         startVolume: 0.8,
-        // useful for <audio> player loops
-        loop: false,
-        // rewind to beginning when media ends
-        autoRewind: true,
         // resize to media dimensions
         enableAutosize: true,
         
@@ -226,7 +222,7 @@
             {
                 keys: [221],  // ]
                 action: function(player, keyCode, activeModifiers) {
-                    if(activeModifiers.ctrl && player.playlist.length > 1) {
+                    if(activeModifiers.ctrl) {
                         player.next();
                     }
                 }
@@ -234,8 +230,16 @@
             {
                 keys: [219],  // [
                 action: function(player, keyCode, activeModifiers) {
-                    if(activeModifiers.ctrl && player.playlist.length > 1) {
+                    if(activeModifiers.ctrl) {
                         player.previous();
+                    }
+                }
+            },
+            {
+                keys: [81],  // q
+                action: function(player, keyCode, activeModifiers) {
+                    if(activeModifiers.ctrl) {
+                        player.changePlayType();
                     }
                 }
             }
