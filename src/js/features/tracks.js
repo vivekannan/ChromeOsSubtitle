@@ -523,8 +523,7 @@ zip.useWebWorkers = packaged_app;
     },
     
     MediaElementPlayer.prototype.checkForTracks = function() {
-        var
-            t = this,
+        var t = this,
             hasSubtitles = false;
             
         // check if any subtitles

@@ -1,7 +1,7 @@
 (function($) {
     MediaElementPlayer.prototype.buildsource = function() {
         var t = this,
-            openFileInput = mejs.Utility.createNestedElement('<input style="display:none" type="file" id="openfile_input"/>'),
+            openFileInput = mejs.Utility.createNestedElement('<input style="display:none" type="file" id="openfile_input" multiple/>'),
             open = mejs.Utility.createNestedElement('<div class="mejs-button mejs-source-button mejs-source" >' +
                 '<button type="button" title="' + mejs.i18n.t('Open video...') + '" aria-label="' + mejs.i18n.t('Open video...') + '"></button>' +
                 '</div>');
@@ -39,11 +39,15 @@
         });
         
         openFileInput.addEventListener('change', function(e) {
-            t.stop();
+            if(openFileInput.files.length > 0) {
+                t.stop();
+            }
+            
             t.tracks = [];
             
-            t.openedFile = openFileInput.files[0];
-            t.setSrc(window.URL.createObjectURL(t.openedFile));
+            t.playlist = openFileInput.files;
+            t.setSrc(t.playlist[0]);
+            t.playIndex = 0;
         });
     }
 })(mejs.$);

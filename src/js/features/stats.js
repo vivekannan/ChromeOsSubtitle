@@ -54,7 +54,7 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
 	    media.addEventListener('loadeddata',function() {
 		sendEvent(
 		    'video', 'loaded',
-		    player.openedFile.name);
+		    player.playlist[player.playIndex].name);
 	    });
 	    media.addEventListener('playing',function() {
 		sendEvent(
