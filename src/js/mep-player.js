@@ -197,15 +197,12 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
         startControlsTimer: function(timeout) {
             var t = this;
             
-            timeout = timeout || 1500;
-            
             t.killControlsTimer('start');
             
             t.controlsTimer = setTimeout(function() {
-                //console.log('timer fired');
                 t.hideControls();
                 t.killControlsTimer('hide');
-            }, timeout);
+            }, timeout || 1500);
         },
         
         killControlsTimer: function(src) {
@@ -327,8 +324,13 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                 // ended for all
                 t.media.addEventListener('ended', function(e) {
                     t.next();
+                    
+                    if(t.isPaused()) {
+                        $('.mejs-pause').removeClass('mejs-pause').addClass('mejs-play');
+                    }
                 }, false);
                 
+                t.media
                 // resize on the first play
                 t.media.addEventListener('loadedmetadata', function(e) {
                     t.updateDuration();
@@ -526,13 +528,13 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
             this.media.currentTime = time;
         },
         
+        getCurrentTime: function() {
+            return this.media.currentTime;
+        },
+        
         seek: function(duration) {
             this.setNotification('Seeking ' + duration + 's.');
             this.setCurrentTime(Math.max(0, Math.min(this.getCurrentTime() + duration, this.getDuration())))
-        },
-        
-        getCurrentTime: function() {
-            return this.media.currentTime;
         },
         
         setVolume: function(volume) {

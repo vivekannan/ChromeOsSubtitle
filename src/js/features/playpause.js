@@ -1,13 +1,9 @@
-(function($) {
-    $.extend(mejs.MepDefaults, {
-        playpauseText: mejs.i18n.t('Play/Pause')
-    });
-    
+(function() {
     // PLAY/pause BUTTON
     MediaElementPlayer.prototype.buildplaypause = function() {
         var t = this,
             playpause = mejs.Utility.createNestedElement('<div class="mejs-button mejs-playpause-button mejs-play" >' +
-            '<button type="button" title="' + t.options.playpauseText + '" aria-label="' + t.options.playpauseText + '"></button>' +
+            '<button type="button" title="Play/Pause" aria-label="Play/Pause"></button>' +
         '</div>');
         
         playpause.addEventListener('click', function(e) {
@@ -16,4 +12,4 @@
         });
         t.controls[0].appendChild(playpause);
     }
-})(mejs.$);
+})();

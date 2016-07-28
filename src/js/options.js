@@ -46,12 +46,7 @@
                     179 // GOOGLE play/pause button
                 ],
                 action: function(player, keyCode, activeModifiers) {
-                    if(player.isPaused() || player.isEnded()) {
-                        player.play();
-                    }
-                    else {
-                        player.pause();
-                    }
+                    player.isPaused() ? player.play() : player.pause();
                 }
             },
             {

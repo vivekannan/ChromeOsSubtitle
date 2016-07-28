@@ -13,7 +13,9 @@
         t.currenttime = t.controls.find('.mejs-currenttime');
         
         t.media.addEventListener('timeupdate', function() {
-            t.controlsAreVisible && t.updateCurrent();
+            if(t.controlsAreVisible) {
+                t.updateCurrent();
+            }
         }, false);
         
         t.currenttime[0].addEventListener('click', function() {
