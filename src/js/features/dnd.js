@@ -1,4 +1,4 @@
-(function($) {
+(function() {
     MediaElementPlayer.prototype.builddrop = function() {
         var t = this;
         
@@ -6,9 +6,11 @@
             e.preventDefault();
             e.stopPropagation();
         }, false);
+        
         document.body.addEventListener('dragleave', function(e) {
             e.preventDefault();
         }, false);
+        
         document.body.addEventListener('drop', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -43,4 +45,4 @@
             }
         }, false);
     }
-})(mejs.$);
+})();

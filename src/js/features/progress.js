@@ -31,7 +31,7 @@
                     newTime = 0,
                     pos = 0;
                 
-                if(t.getDuration()) {
+                if(t.getSrc()) {
                     if(x < offset.left) {
                         x = offset.left;
                     } else if(x > width + offset.left) {
@@ -46,12 +46,9 @@
                         t.setCurrentTime(newTime);
                     }
                     
-                    // position floating time box
-                    if(!mejs.MediaFeatures.hasTouch) {
-                        timefloat[0].style.left = pos;
-                        timefloatcurrent[0].innerHTML = mejs.Utility.secondsToTimeCode(newTime);
-                        timefloat.show();
-                    }
+                    timefloat[0].style.left = pos;
+                    timefloatcurrent[0].innerHTML = mejs.Utility.secondsToTimeCode(newTime);
+                    timefloat.show();
                 }
             },
             mouseIsDown = false,
@@ -93,31 +90,13 @@
                 }
             });
         
-        // current time
-        t.media.addEventListener('timeupdate', function(e) {
-            if(!t.controlsAreVisible)
-                return;
-            
-            t.setCurrentRail(e);
-            t.setControlsSize();
-        });
-        
         // store for later use
         t.loaded = loaded;
         t.total = total;
         t.current = current;
-    }
+    };
     
     MediaElementPlayer.prototype.setCurrentRail = function() {
-        var t = this;
-        
-        if(t.getCurrentTime() != undefined && t.getDuration()) {
-            // update bar and handle
-            if(t.total) {
-                var newWidth = (parseFloat(t.total[0].style.width) || 0) * t.getCurrentTime() / t.getDuration();
-                
-                t.current[0].style.width = newWidth;
-            }
-        }
-    }
+        this.current[0].style.width = (parseFloat(this.total[0].style.width) || 0) * this.getCurrentTime() / this.getDuration();
+    };
 })(mejs.$);

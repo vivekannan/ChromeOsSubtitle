@@ -12,12 +12,6 @@
         t.time = t.controls.find('.mejs-time');
         t.currenttime = t.controls.find('.mejs-currenttime');
         
-        t.media.addEventListener('timeupdate', function() {
-            if(t.controlsAreVisible) {
-                t.updateCurrent();
-            }
-        }, false);
-        
         t.currenttime[0].addEventListener('click', function() {
             if(t.getDuration()) {
                 showRemaining = !showRemaining;
@@ -25,11 +19,11 @@
                 t.updateCurrent();
                 t.setControlsSize();
             }
-        })
+        });
     }
     
     MediaElementPlayer.prototype.buildduration = function() {
-        $('<span>/</span><span class="mejs-duration">00:00</span></span>').appendTo(this.controls.find('.mejs-time'));
+        $('<span>/</span><span class="mejs-duration">00:00</span></span>').appendTo(this.time);
         
         this.durationD = this.controls.find('.mejs-duration');
     }

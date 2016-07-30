@@ -26,8 +26,6 @@
         autosizeProgress: true,
         // Hide controls when playing and mouse is not over the video
         alwaysShowControls: false,
-        // force Android's native controls
-        AndroidUseNativeControls: false,
         // features to show
         features: ['playlist', 'source', 'settings', 'playpause', 'stop', 'progress', 'current', 'duration', 'tracks', 'subdelay', 'subsize', 'volume', 'settingsbutton', 'info', 'help', 'fullscreen', 'drop', 'stats', 'opensubtitle', 'autosrt', 'notification', 'shortcuts', 'stats'],
         
@@ -52,11 +50,13 @@
             {
                 keys: [38], // UP
                 action: function(player, keyCode, activeModifiers) {
-                    if(activeModifiers.alt && activeModifiers.ctrl) {
-                        player.moveCaptions(keyCode);
-                    }
-                    else if(activeModifiers.ctrl) {
-                        player.setVolume(Math.min(player.getVolume() + 0.1, 1));
+                    if(activeModifiers.ctrl) {
+                        if(activeModifiers.alt) {
+                            player.moveCaptions(keyCode);
+                        }
+                        else {
+                            player.setVolume(Math.min(player.getVolume() + 0.1, 1));
+                        }
                     }
                 }
             },
