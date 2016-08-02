@@ -1,29 +1,7 @@
 (function() {
     mejs.MepDefaults = {
-        // default if the <video width> is not specified
-        defaultVideoWidth: 480,
-        // default if the <video height> is not specified
-        defaultVideoHeight: 270,
-        // if set, overrides <video width>
-        videoWidth: -1,
-        // if set, overrides <video height>
-        videoHeight: -1,
-        // default if the user doesn't specify
-        defaultAudioWidth: 400,
-        // default if the user doesn't specify
-        defaultAudioHeight: 30,
-        
-        // width of audio player
-        audioWidth: -1,
-        // height of audio player
-        audioHeight: -1,
         // initial volume when the player starts (overrided by user cookie)
         startVolume: 0.8,
-        // resize to media dimensions
-        enableAutosize: true,
-        
-        // automatically calculate the width of the progress bar based on the sizes of other elements
-        autosizeProgress: true,
         // Hide controls when playing and mouse is not over the video
         alwaysShowControls: false,
         // features to show
@@ -54,6 +32,9 @@
                         if(activeModifiers.alt) {
                             player.moveCaptions(keyCode);
                         }
+                        else if(activeModifiers.shift) {
+                            player.changeBrightness(true);
+                        }
                         else {
                             player.setVolume(Math.min(player.getVolume() + 0.1, 1));
                         }
@@ -65,6 +46,9 @@
                 action: function(player, keyCode, activeModifiers) {
                     if(activeModifiers.alt && activeModifiers.ctrl) {
                         player.moveCaptions(keyCode);
+                    }
+                    else if(activeModifiers.shift) {
+                        player.changeBrightness(false);
                     }
                     else if(activeModifiers.ctrl) {
                         player.setVolume(Math.max(player.getVolume() - 0.1, 0));

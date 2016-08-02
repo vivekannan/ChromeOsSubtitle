@@ -9,7 +9,7 @@ $('#player').mediaelementplayer({
     isVideo: true,
     hideCaptionsButtonWhenEmpty: false,
     mode: "native",
-    success: function(mediaElement, domObject) {
+    success: function(mediaElement) {
         mainMediaElement = mediaElement;
         
         mainMediaElement.player.container
@@ -23,7 +23,7 @@ $('#player').mediaelementplayer({
         t.layers.children('div')
             .width('100%')
             .height('100%');
-        
+        console.log('78787');
         t.setControlsSize();
         
         function openCmdLineVideo() {

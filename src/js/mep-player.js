@@ -1,4 +1,4 @@
-var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
+var packaged_app = (window.location.origin.indexOf("chrome-extension") === 0);
 
 (function($) {
     // wraps a MediaElement object in player controls
@@ -22,11 +22,6 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
             t.node.player = t;
         }
         
-        // try to get options from data-mejsoptions
-        if(typeof o == 'undefined') {
-            o = t.$node.data('mejsoptions');
-        }
-        
         // extend default options
         t.options = $.extend({}, mejs.MepDefaults, o);
         
@@ -45,15 +40,12 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                 mf = mejs.MediaFeatures,
                 // options for MediaElement (shim)
                 meOptions = $.extend(true, {}, t.options, {
-                    success: function(media, domNode) {
-                        t.meReady(media, domNode);
-                    },
-                    error: function(e) {
-                        t.handleError(e);
+                    success: function(media) {
+                        t.meReady(media);
                     }
                 }),
                 tagName = t.media.tagName.toLowerCase();
-                
+            
             t.isDynamic = (tagName !== 'audio' && tagName !== 'video');
             
             if(t.isDynamic) {
@@ -81,7 +73,6 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                 
             // add classes for user and content
             t.container.addClass(
-                (mf.isAndroid ? 'mejs-android ' : '') +
                 (t.isVideo ? 'mejs-video ' : 'mejs-audio ')
             );
             
@@ -91,42 +82,6 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
             // find parts
             t.controls = t.container.find('.mejs-controls');
             t.layers = t.container.find('.mejs-layers');
-            
-            // determine the size
-            
-            /* size priority:
-               (1) videoWidth (forced), 
-               (2) style="width;height;"
-               (3) width attribute,
-               (4) defaultVideoWidth (for unspecified cases)
-            */
-            
-            var tagType = (t.isVideo ? 'video' : 'audio'),
-                capsTagName = tagType.substring(0, 1).toUpperCase() + tagType.substring(1);
-            
-            if(t.options[tagType + 'Width'] > 0 || t.options[tagType + 'Width'].toString().indexOf('%') > -1) {
-                t.width = t.options[tagType + 'Width'];
-            } else if(t.media.style.width !== '' && t.media.style.width !== null) {
-                t.width = t.media.style.width;
-            } else if(t.media.getAttribute('width') !== null) {
-                t.width = t.$media.attr('width');
-            } else {
-                t.width = t.options['default' + capsTagName + 'Width'];
-            }
-            
-            if(t.options[tagType + 'Height'] > 0 || t.options[tagType + 'Height'].toString().indexOf('%') > -1) {
-                t.height = t.options[tagType + 'Height'];
-            } else if(t.media.style.height !== '' && t.media.style.height !== null) {
-                t.height = t.media.style.height;
-            } else if(t.$media[0].getAttribute('height') !== null) {
-                t.height = t.$media.attr('height');
-            } else {
-                t.height = t.options['default' + capsTagName + 'Height'];
-            }
-            
-            // create MediaElementShim
-            meOptions.pluginWidth = t.height;
-            meOptions.pluginHeight = t.width;
             
             // create MediaElement shim
             mejs.MediaElement(t.$media[0], meOptions);
@@ -138,9 +93,9 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
         },
         
         timeupdate: function() {
-            this.updateCurrent();
-            this.setCurrentRail();
-            this.setControlsSize();
+            this.player.updateCurrent();
+            this.player.setCurrentRail();
+            this.player.setControlsSize();
         },
         
         showControls: function() {
@@ -157,15 +112,6 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                     t.controlsAreVisible = true;
                     t.container.trigger('controlsshown');
                 });
-                
-            // any additional controls people might add and want to hide
-            t.container.find('.mejs-control')
-                .css('visibility', 'visible')
-                .stop(true, true).fadeIn(200, function() {
-                    t.controlsAreVisible = true;
-                });
-            
-            t.setControlsSize();
         },
         
         hideControls: function() {
@@ -176,19 +122,10 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
             
             // fade out main controls
             t.controls.stop(true, true).fadeOut(200, function() {
-                $(this)
-                    .css('visibility', 'hidden')
-                    .css('display', 'block');
-                    
+                $(this).css('visibility', 'hidden');
+                
                 t.controlsAreVisible = false;
                 t.container.trigger('controlshidden');
-            });
-            
-            // any additional controls people might add and want to hide
-            t.container.find('.mejs-control').stop(true, true).fadeOut(200, function() {
-                $(this)
-                    .css('visibility', 'hidden')
-                    .css('display', 'block');
             });
             
             t.media.removeEventListener('timeupdate', t.timeupdate, false);
@@ -218,10 +155,10 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
         },
         
         // Sets up all controls and events
-        meReady: function(media, domNode) {
+        meReady: function(media) {
             var t = this,
                 mf = mejs.MediaFeatures,
-                autoplayAttr = domNode.getAttribute('autoplay'),
+                autoplayAttr = media.getAttribute('autoplay'),
                 autoplay = !(typeof autoplayAttr == 'undefined' || autoplayAttr === null || autoplayAttr === 'false'),
                 featureIndex,
                 feature;
@@ -233,7 +170,6 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                 t.created = true;
             
             t.media = media;
-            t.domNode = domNode;
             
             // built in feature
             t.buildoverlays(t, t.controls, t.layers, t.media);
@@ -320,7 +256,6 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                 }
             }, false);
             
-            t.media
             // resize on the first play
             t.media.addEventListener('loadedmetadata', function(e) {
                 t.updateDuration();
@@ -343,13 +278,7 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                 t.resizeVideo();
             });
             
-            if(t.options.success) {
-                if(typeof t.options.success == 'string') {
-                    window[t.options.success](t.media, t.domNode, t);
-                } else {
-                    t.options.success(t.media, t.domNode, t);
-                }
-            }
+            t.options.success(t.media);
         },
         
         setControlsSize: function() {
@@ -574,7 +503,6 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
             if(this.currentAspectRatio === 0) {
                 targetAspectRatio = this.media.videoWidth / this.media.videoHeight;
             }
-            
             else {
                 targetAspectRatio = this.options.aspectRatios[this.currentAspectRatio];
             }
@@ -614,6 +542,14 @@ var packaged_app = (window.location.origin.indexOf("chrome-extension") == 0);
                     c.style.bottom = mejs.Utility.addToPixel(c.style.bottom, -8);
                     break;
             }
+        },
+        
+        brightness: 1.0,
+        
+        changeBrightness: function(inc) {
+            this.brightness = Math.min(Math.max(0.5, this.brightness + (inc ? 0.1 : -0.1)), 2);
+            this.media.style.webkitFilter = 'brightness(' + this.brightness + ')';
+            this.setNotification('Brightness x' + this.brightness.toFixed(1));
         }
     };
     
