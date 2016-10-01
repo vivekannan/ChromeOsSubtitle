@@ -1,5 +1,7 @@
 ChromeOsSubtitle
 ================
+NOT MAINTAINED ANYMORE. GO [HERE](https://github.com/guancio/ChromeOsSubtitle)
+
 
 A small video player supporting subtitles
 This is currently a toy app. Please report your suggestions.
